@@ -71,7 +71,7 @@ import java.io.IOException
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun NavigationView(items: MutableList<NavigationItem>, mainActivity: BaseComposeActivity) {
+fun NavigationView(items: MutableList<NavigationItem>, mainActivity: BaseComposeActivity, homeTitle: String) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("app.home") }
     var navhostBackground = remember { mutableStateOf(Color.White) }
@@ -92,7 +92,7 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: BaseCompose
             composable(items[index].id) {
                 when (items[index].id) {
                     "app.home" -> {
-                        title.value = "FreeBookReader"
+                        title.value = homeTitle
                         navTarget.value = ""
                     }
                     "app.books" -> {

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.6.0" type="partial_results">
+    <map id="UnsafeImplicitIntentLaunch">
+            <map id="actionsSent">
+                    <map id="android.intent.action.VIEW (used to start an activity)">
+                        <location id="0"
+                            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/BaseComposeActivity.kt"
+                            line="80"
+                            column="29"
+                            startOffset="2487"
+                            endLine="80"
+                            endColumn="71"
+                            endOffset="2529"/>
+                        <location id="1"
+                            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+                            line="654"
+                            column="26"
+                            startOffset="25803"
+                            endLine="654"
+                            endColumn="68"
+                            endOffset="25845"/>
+                    </map>
+                    <map id="android.intent.action.SENDTO (used to start an activity)">
+                        <location id="0"
+                            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+                            line="658"
+                            column="26"
+                            startOffset="25962"
+                            endLine="658"
+                            endColumn="54"
+                            endOffset="25990"/>
+                    </map>
+            </map>
+    </map>
+    <map id="AppBundleLocaleChanges">
+        <location id="localeChangeLocation"
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/logic/LocaleManager.kt"
+            line="85"
+            column="9"
+            startOffset="3300"
+            endLine="85"
+            endColumn="40"
+            endOffset="3331"/>
+    </map>
+    <map id="UnusedResources">
+        <location id="R.string.navigation_home"
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="6"
+            column="13"
+            startOffset="185"
+            endLine="6"
+            endColumn="35"
+            endOffset="207"/>
+        <location id="R.string.home"
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="4"
+            column="13"
+            startOffset="101"
+            endLine="4"
+            endColumn="24"
+            endOffset="112"/>
+        <location id="R.string.navigation_books"
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="22"
+            column="13"
+            startOffset="1020"
+            endLine="22"
+            endColumn="36"
+            endOffset="1043"/>
+        <entry
+            name="model"
+            string="drawable[baseline_arrow_drop_down_24(U),baseline_arrow_drop_up_24(U),icon(U)],string[icon(U),home(D),settings(U),navigation_home(D),navigation_about(U),about(U),personal_data(U),select_preferred_language(U),language_english(U),language_german(U),language_spanish(U),language_french(U),language_portugues(U),language_esperanto(U),links(U),add_link(U),title(U),url(U),add_new_link(U),navigation_books(D)];;;;"/>
+    </map>
+
+</incidents>

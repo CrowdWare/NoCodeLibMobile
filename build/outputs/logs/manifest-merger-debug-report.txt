@@ -1,16 +1,16 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml:2:13-83
-INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml:2:13-83
+ADDED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml:2:13-83
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml:2:13-83
 	package
-		INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml
 	xmlns:android
-		ADDED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml:2:23-81
+		ADDED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml:2:23-81
 uses-sdk
-INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml reason: use-sdk injection requested
-INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml
-INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml reason: use-sdk injection requested
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml
 	android:targetSdkVersion
-		INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml
 	android:minSdkVersion
-		INJECTED from /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5171660931331682061.xml
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest7230408861311252323.xml

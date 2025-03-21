@@ -60,10 +60,10 @@ at.crowdware.nocodelibmobile-ui-geometry-release-58 /Users/art/.gradle/caches/tr
 at.crowdware.nocodelibmobile-core-12.1.0-59 /Users/art/.gradle/caches/transforms-4/f996b87bc4a9c269095818ee78220c6c/transformed/core-12.1.0/res
 at.crowdware.nocodelibmobile-lifecycle-runtime-ktx-release-60 /Users/art/.gradle/caches/transforms-4/fc71495bf68477757ded2d04554972d0/transformed/lifecycle-runtime-ktx-release/res
 at.crowdware.nocodelibmobile-navigation-common-2.6.0-61 /Users/art/.gradle/caches/transforms-4/feb4fb8f152a5df6013105c999ca83be/transformed/navigation-common-2.6.0/res
-at.crowdware.nocodelibmobile-pngs-62 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/generated/res/pngs/release
-at.crowdware.nocodelibmobile-resValues-63 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/generated/res/resValues/release
-at.crowdware.nocodelibmobile-mergeReleaseResources-64 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-at.crowdware.nocodelibmobile-mergeReleaseResources-65 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-at.crowdware.nocodelibmobile-release-66 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/build/intermediates/merged_res/release/mergeReleaseResources
-at.crowdware.nocodelibmobile-main-67 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/src/main/res
-at.crowdware.nocodelibmobile-release-68 /Users/art/SourceCode/NoCode/FreeBookReader/nocodelibmobile/src/release/res
+at.crowdware.nocodelibmobile-pngs-62 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/generated/res/pngs/release
+at.crowdware.nocodelibmobile-resValues-63 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/generated/res/resValues/release
+at.crowdware.nocodelibmobile-mergeReleaseResources-64 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
+at.crowdware.nocodelibmobile-mergeReleaseResources-65 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+at.crowdware.nocodelibmobile-release-66 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/build/intermediates/merged_res/release/mergeReleaseResources
+at.crowdware.nocodelibmobile-main-67 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/src/main/res
+at.crowdware.nocodelibmobile-release-68 /Users/art/SourceCode/NoCode/NoCodeBrowser/nocodelibmobile/src/release/res

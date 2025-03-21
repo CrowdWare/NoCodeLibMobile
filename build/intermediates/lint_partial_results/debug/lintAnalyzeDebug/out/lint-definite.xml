@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.6.0" type="incidents">
+
+    <incident
+        id="VectorRaster"
+        severity="warning"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more">
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icon.xml"
+            line="2"
+            column="20"
+            startOffset="86"
+            endLine="2"
+            endColumn="25"
+            endOffset="91"/>
+    </incident>
+
+    <incident
+        id="AutoboxingStateCreation"
+        severity="informational"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`">
+        <fix-replace
+            description="Replace with mutableIntStateOf"
+            replacement="androidx.compose.runtime.mutableIntStateOf"
+            shortenNames="true"
+            priority="0">
+            <range
+                file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/ui/widgets/DropDownListboxStateHolder.kt"
+                startOffset="1501"
+                endOffset="1515"/>
+        </fix-replace>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/ui/widgets/DropDownListboxStateHolder.kt"
+            line="34"
+            column="26"
+            startOffset="1501"
+            endLine="34"
+            endColumn="40"
+            endOffset="1515"/>
+    </incident>
+
+    <incident
+        id="StaticFieldLeak"
+        severity="warning"
+        message="Do not place Android context classes in static fields (static reference to `NavController` which has field `context` pointing to `Context`); this is a memory leak">
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/ui/widgets/NavigationManager.kt"
+            line="25"
+            column="5"
+            startOffset="1025"
+            endLine="25"
+            endColumn="53"
+            endOffset="1073"/>
+    </incident>
+
+    <incident
+        id="StaticFieldLeak"
+        severity="warning"
+        message="Do not place Android context classes in static fields (static reference to `NavController` which has field `context` pointing to `Context`); this is a memory leak">
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/NavigationManager.kt"
+            line="25"
+            column="5"
+            startOffset="1020"
+            endLine="25"
+            endColumn="53"
+            endOffset="1068"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderColumn"
+            robot="true"
+            independent="true"
+            oldString="renderColumn"
+            replacement="RenderColumn"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="364"
+            column="5"
+            startOffset="15182"
+            endLine="364"
+            endColumn="17"
+            endOffset="15194"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderRow"
+            robot="true"
+            independent="true"
+            oldString="renderRow"
+            replacement="RenderRow"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="386"
+            column="5"
+            startOffset="15848"
+            endLine="386"
+            endColumn="14"
+            endOffset="15857"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderLazyColumn"
+            robot="true"
+            independent="true"
+            oldString="renderLazyColumn"
+            replacement="RenderLazyColumn"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="408"
+            column="5"
+            startOffset="16494"
+            endLine="408"
+            endColumn="21"
+            endOffset="16510"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderLazyRow"
+            robot="true"
+            independent="true"
+            oldString="renderLazyRow"
+            replacement="RenderLazyRow"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="438"
+            column="5"
+            startOffset="17573"
+            endLine="438"
+            endColumn="18"
+            endOffset="17586"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderText"
+            robot="true"
+            independent="true"
+            oldString="renderText"
+            replacement="RenderText"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="462"
+            column="5"
+            startOffset="18420"
+            endLine="462"
+            endColumn="15"
+            endOffset="18430"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderMarkdown"
+            robot="true"
+            independent="true"
+            oldString="renderMarkdown"
+            replacement="RenderMarkdown"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="476"
+            column="14"
+            startOffset="18848"
+            endLine="476"
+            endColumn="28"
+            endOffset="18862"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderMarkdown"
+            robot="true"
+            independent="true"
+            oldString="renderMarkdown"
+            replacement="RenderMarkdown"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="533"
+            column="17"
+            startOffset="21045"
+            endLine="533"
+            endColumn="31"
+            endOffset="21059"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderMarkdown"
+            robot="true"
+            independent="true"
+            oldString="renderMarkdown"
+            replacement="RenderMarkdown"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="590"
+            column="5"
+            startOffset="23230"
+            endLine="590"
+            endColumn="19"
+            endOffset="23244"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to RenderButton"
+            robot="true"
+            independent="true"
+            oldString="renderButton"
+            replacement="RenderButton"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="672"
+            column="5"
+            startOffset="26301"
+            endLine="672"
+            endColumn="17"
+            endOffset="26313"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to DynamicImageFromAssets"
+            robot="true"
+            independent="true"
+            oldString="dynamicImageFromAssets"
+            replacement="DynamicImageFromAssets"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="816"
+            column="5"
+            startOffset="31372"
+            endLine="816"
+            endColumn="27"
+            endOffset="31394"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to DynamicSoundfromAssets"
+            robot="true"
+            independent="true"
+            oldString="dynamicSoundfromAssets"
+            replacement="DynamicSoundfromAssets"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="870"
+            column="5"
+            startOffset="33251"
+            endLine="870"
+            endColumn="27"
+            endOffset="33273"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to DynamicVideofromAssets"
+            robot="true"
+            independent="true"
+            oldString="dynamicVideofromAssets"
+            replacement="DynamicVideofromAssets"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="904"
+            column="5"
+            startOffset="34355"
+            endLine="904"
+            endColumn="27"
+            endOffset="34377"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to DynamicYoutube"
+            robot="true"
+            independent="true"
+            oldString="dynamicYoutube"
+            replacement="DynamicYoutube"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="949"
+            column="5"
+            startOffset="35818"
+            endLine="949"
+            endColumn="19"
+            endOffset="35832"/>
+    </incident>
+
+    <incident
+        id="ComposableNaming"
+        severity="warning"
+        message="Composable functions that return Unit should start with an uppercase letter">
+        <fix-replace
+            description="Change to DynamicScene"
+            robot="true"
+            independent="true"
+            oldString="dynamicScene"
+            replacement="DynamicScene"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="988"
+            column="5"
+            startOffset="36947"
+            endLine="988"
+            endColumn="17"
+            endOffset="36959"/>
+    </incident>
+
+    <incident
+        id="ClickableViewAccessibility"
+        severity="warning"
+        message="Custom view ``SurfaceView`` has `setOnTouchListener` called on it but does not override `performClick`">
+        <location
+            file="${:nocodelibmobile*debug*MAIN*sourceProvider*0*javaDir*0}/at/crowdware/nocodelibmobile/utils/PageLoader.kt"
+            line="1043"
+            column="13"
+            startOffset="39362"
+            endLine="1043"
+            endColumn="56"
+            endOffset="39405"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of `compileSdkVersion` than 33 is available: 34">
+        <fix-replace
+            description="Set compileSdkVersion to 34"
+            oldString="33"
+            replacement="34"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="12"
+            column="5"
+            startOffset="258"
+            endLine="12"
+            endColumn="20"
+            endOffset="273"/>
+    </incident>
+
+    <incident
+        id="OldTargetApi"
+        severity="warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details.">
+        <fix-replace
+            description="Update targetSdkVersion to 35"
+            oldString="33"
+            replacement="35"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="24"
+            column="9"
+            startOffset="488"
+            endLine="24"
+            endColumn="23"
+            endOffset="502"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use the existing version catalog reference (`libs.androidx.core.ktx`) instead">
+        <fix-replace
+            description="Replace with existing version catalog reference `androidx-core-ktx`"
+            robot="true"
+            independent="true"
+            replacement="libs.androidx.core.ktx"
+            priority="0">
+            <range
+                file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                startOffset="713"
+                endOffset="744"/>
+        </fix-replace>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="38"
+            column="20"
+            startOffset="713"
+            endLine="38"
+            endColumn="51"
+            endOffset="744"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use the existing version catalog reference (`libs.androidx.compose.bom`) instead">
+        <fix-replace
+            description="Replace with existing version catalog reference `androidx-compose-bom`"
+            robot="true"
+            independent="true"
+            replacement="libs.androidx.compose.bom"
+            priority="0">
+            <range
+                file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                startOffset="800"
+                endOffset="851"/>
+        </fix-replace>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="41"
+            column="20"
+            startOffset="800"
+            endLine="41"
+            endColumn="71"
+            endOffset="851"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-compose-ui-ui15"
+            robot="true">
+            <fix-replace
+                description="Replace with androidx-compose-ui-ui15 = { module = &quot;androidx.compose.ui:ui&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-compose-ui-ui15 = { module = &quot;androidx.compose.ui:ui&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="419"
+                    endOffset="419"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.compose.ui.ui15"
+                robot="true"
+                replacement="libs.androidx.compose.ui.ui15"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="872"
+                    endOffset="896"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="42"
+            column="20"
+            startOffset="872"
+            endLine="42"
+            endColumn="44"
+            endOffset="896"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-compose-material-material15"
+            robot="true">
+            <fix-replace
+                description="Replace with androidx-compose-material-material15 = { module = &quot;androidx.compose.material:material&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-compose-material-material15 = { module = &quot;androidx.compose.material:material&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="419"
+                    endOffset="419"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.compose.material.material15"
+                robot="true"
+                replacement="libs.androidx.compose.material.material15"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="917"
+                    endOffset="953"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="43"
+            column="20"
+            startOffset="917"
+            endLine="43"
+            endColumn="56"
+            endOffset="953"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-compose-ui-ui-tooling-preview15"
+            robot="true">
+            <fix-replace
+                description="Replace with androidx-compose-ui-ui-tooling-preview15 = { module = &quot;androidx.compose.ui:ui-tooling-preview&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-compose-ui-ui-tooling-preview15 = { module = &quot;androidx.compose.ui:ui-tooling-preview&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="419"
+                    endOffset="419"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.compose.ui.ui.tooling.preview15"
+                robot="true"
+                replacement="libs.androidx.compose.ui.ui.tooling.preview15"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="974"
+                    endOffset="1014"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="44"
+            column="20"
+            startOffset="974"
+            endLine="44"
+            endColumn="60"
+            endOffset="1014"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use the existing version catalog reference (`libs.androidx.lifecycle.runtime.ktx`) instead">
+        <fix-replace
+            description="Replace with existing version catalog reference `androidx-lifecycle-runtime-ktx`"
+            robot="true"
+            independent="true"
+            replacement="libs.androidx.lifecycle.runtime.ktx"
+            priority="0">
+            <range
+                file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                startOffset="1035"
+                endOffset="1083"/>
+        </fix-replace>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="45"
+            column="20"
+            startOffset="1035"
+            endLine="45"
+            endColumn="68"
+            endOffset="1083"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use the existing version catalog reference (`libs.androidx.activity.compose`) instead">
+        <fix-replace
+            description="Replace with existing version catalog reference `androidx-activity-compose`"
+            robot="true"
+            independent="true"
+            replacement="libs.androidx.activity.compose"
+            priority="0">
+            <range
+                file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                startOffset="1104"
+                endOffset="1146"/>
+        </fix-replace>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="46"
+            column="20"
+            startOffset="1104"
+            endLine="46"
+            endColumn="62"
+            endOffset="1146"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-compose-ui-ui-tooling15"
+            robot="true">
+            <fix-replace
+                description="Replace with androidx-compose-ui-ui-tooling15 = { module = &quot;androidx.compose.ui:ui-tooling&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-compose-ui-ui-tooling15 = { module = &quot;androidx.compose.ui:ui-tooling&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="419"
+                    endOffset="419"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.compose.ui.ui.tooling15"
+                robot="true"
+                replacement="libs.androidx.compose.ui.ui.tooling15"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1244"
+                    endOffset="1276"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="49"
+            column="25"
+            startOffset="1244"
+            endLine="49"
+            endColumn="57"
+            endOffset="1276"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-google-android-material-material29"
+            robot="true">
+            <fix-replace
+                description="Replace with comGoogleAndroidMaterialMaterial28 = &quot;1.10.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comGoogleAndroidMaterialMaterial28 = &quot;1.10.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-google-android-material-material29 = { module = &quot;com.google.android.material:material&quot;, version.ref = &quot;comGoogleAndroidMaterialMaterial28&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-google-android-material-material29 = { module = &quot;com.google.android.material:material&quot;, version.ref = &quot;comGoogleAndroidMaterialMaterial28&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.google.android.material.material29"
+                robot="true"
+                replacement="libs.com.google.android.material.material29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1297"
+                    endOffset="1342"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="50"
+            column="20"
+            startOffset="1297"
+            endLine="50"
+            endColumn="65"
+            endOffset="1342"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-navigation-navigation-compose29"
+            robot="true">
+            <fix-replace
+                description="Replace with androidxNavigationNavigationCompose27 = &quot;2.6.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidxNavigationNavigationCompose27 = &quot;2.6.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with androidx-navigation-navigation-compose29 = { module = &quot;androidx.navigation:navigation-compose&quot;, version.ref = &quot;androidxNavigationNavigationCompose27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-navigation-navigation-compose29 = { module = &quot;androidx.navigation:navigation-compose&quot;, version.ref = &quot;androidxNavigationNavigationCompose27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.navigation.navigation.compose29"
+                robot="true"
+                replacement="libs.androidx.navigation.navigation.compose29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1363"
+                    endOffset="1409"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="51"
+            column="20"
+            startOffset="1363"
+            endLine="51"
+            endColumn="66"
+            endOffset="1409"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-squareup-okhttp3-okhttp28"
+            robot="true">
+            <fix-replace
+                description="Replace with comSquareupOkhttp3Okhttp27 = &quot;4.9.3&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comSquareupOkhttp3Okhttp27 = &quot;4.9.3&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-squareup-okhttp3-okhttp28 = { module = &quot;com.squareup.okhttp3:okhttp&quot;, version.ref = &quot;comSquareupOkhttp3Okhttp27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-squareup-okhttp3-okhttp28 = { module = &quot;com.squareup.okhttp3:okhttp&quot;, version.ref = &quot;comSquareupOkhttp3Okhttp27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.squareup.okhttp3.okhttp28"
+                robot="true"
+                replacement="libs.com.squareup.okhttp3.okhttp28"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1449"
+                    endOffset="1484"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="53"
+            column="20"
+            startOffset="1449"
+            endLine="53"
+            endColumn="55"
+            endOffset="1484"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-github-h0tk3y-betterparse-better-parse28"
+            robot="true">
+            <fix-replace
+                description="Replace with comGithubH0tk3yBetterparseBetterParse27 = &quot;0.4.4&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comGithubH0tk3yBetterparseBetterParse27 = &quot;0.4.4&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-github-h0tk3y-betterparse-better-parse28 = { module = &quot;com.github.h0tk3y.betterParse:better-parse&quot;, version.ref = &quot;comGithubH0tk3yBetterparseBetterParse27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-github-h0tk3y-betterparse-better-parse28 = { module = &quot;com.github.h0tk3y.betterParse:better-parse&quot;, version.ref = &quot;comGithubH0tk3yBetterparseBetterParse27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.github.h0tk3y.betterparse.better.parse28"
+                robot="true"
+                replacement="libs.com.github.h0tk3y.betterparse.better.parse28"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1536"
+                    endOffset="1586"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="55"
+            column="20"
+            startOffset="1536"
+            endLine="55"
+            endColumn="70"
+            endOffset="1586"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-media3-media3-exoplayer29"
+            robot="true">
+            <fix-replace
+                description="Replace with androidxMedia3Media3Exoplayer27 = &quot;1.4.1&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidxMedia3Media3Exoplayer27 = &quot;1.4.1&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with androidx-media3-media3-exoplayer29 = { module = &quot;androidx.media3:media3-exoplayer&quot;, version.ref = &quot;androidxMedia3Media3Exoplayer27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-media3-media3-exoplayer29 = { module = &quot;androidx.media3:media3-exoplayer&quot;, version.ref = &quot;androidxMedia3Media3Exoplayer27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.media3.media3.exoplayer29"
+                robot="true"
+                replacement="libs.androidx.media3.media3.exoplayer29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1628"
+                    endOffset="1668"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="58"
+            column="20"
+            startOffset="1628"
+            endLine="58"
+            endColumn="60"
+            endOffset="1668"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-media3-media3-exoplayer-dash29"
+            robot="true">
+            <fix-replace
+                description="Replace with androidxMedia3Media3ExoplayerDash27 = &quot;1.4.1&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidxMedia3Media3ExoplayerDash27 = &quot;1.4.1&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with androidx-media3-media3-exoplayer-dash29 = { module = &quot;androidx.media3:media3-exoplayer-dash&quot;, version.ref = &quot;androidxMedia3Media3ExoplayerDash27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-media3-media3-exoplayer-dash29 = { module = &quot;androidx.media3:media3-exoplayer-dash&quot;, version.ref = &quot;androidxMedia3Media3ExoplayerDash27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.media3.media3.exoplayer.dash29"
+                robot="true"
+                replacement="libs.androidx.media3.media3.exoplayer.dash29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1689"
+                    endOffset="1734"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="59"
+            column="20"
+            startOffset="1689"
+            endLine="59"
+            endColumn="65"
+            endOffset="1734"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for androidx-media3-media3-ui29"
+            robot="true">
+            <fix-replace
+                description="Replace with androidxMedia3Media3Ui27 = &quot;1.4.1&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidxMedia3Media3Ui27 = &quot;1.4.1&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with androidx-media3-media3-ui29 = { module = &quot;androidx.media3:media3-ui&quot;, version.ref = &quot;androidxMedia3Media3Ui27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="androidx-media3-media3-ui29 = { module = &quot;androidx.media3:media3-ui&quot;, version.ref = &quot;androidxMedia3Media3Ui27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.androidx.media3.media3.ui29"
+                robot="true"
+                replacement="libs.androidx.media3.media3.ui29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1755"
+                    endOffset="1788"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="60"
+            column="20"
+            startOffset="1755"
+            endLine="60"
+            endColumn="53"
+            endOffset="1788"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-pierfrancescosoffritti-androidyoutubeplayer-core28"
+            robot="true">
+            <fix-replace
+                description="Replace with comPierfrancescosoffrittiAndroidyoutubeplayerCore27 = &quot;12.1.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comPierfrancescosoffrittiAndroidyoutubeplayerCore27 = &quot;12.1.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-pierfrancescosoffritti-androidyoutubeplayer-core28 = { module = &quot;com.pierfrancescosoffritti.androidyoutubeplayer:core&quot;, version.ref = &quot;comPierfrancescosoffrittiAndroidyoutubeplayerCore27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-pierfrancescosoffritti-androidyoutubeplayer-core28 = { module = &quot;com.pierfrancescosoffritti.androidyoutubeplayer:core&quot;, version.ref = &quot;comPierfrancescosoffrittiAndroidyoutubeplayerCore27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.pierfrancescosoffritti.androidyoutubeplayer.core28"
+                robot="true"
+                replacement="libs.com.pierfrancescosoffritti.androidyoutubeplayer.core28"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1832"
+                    endOffset="1893"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="63"
+            column="20"
+            startOffset="1832"
+            endLine="63"
+            endColumn="81"
+            endOffset="1893"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-google-android-filament-filament-android29"
+            robot="true">
+            <fix-replace
+                description="Replace with comGoogleAndroidFilamentFilamentAndroid27 = &quot;1.54.5&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comGoogleAndroidFilamentFilamentAndroid27 = &quot;1.54.5&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-google-android-filament-filament-android29 = { module = &quot;com.google.android.filament:filament-android&quot;, version.ref = &quot;comGoogleAndroidFilamentFilamentAndroid27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-google-android-filament-filament-android29 = { module = &quot;com.google.android.filament:filament-android&quot;, version.ref = &quot;comGoogleAndroidFilamentFilamentAndroid27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.google.android.filament.filament.android29"
+                robot="true"
+                replacement="libs.com.google.android.filament.filament.android29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="1934"
+                    endOffset="1987"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="66"
+            column="20"
+            startOffset="1934"
+            endLine="66"
+            endColumn="73"
+            endOffset="1987"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-google-android-filament-filament-utils-android29"
+            robot="true">
+            <fix-replace
+                description="Replace with comGoogleAndroidFilamentFilamentUtilsAndroid27 = &quot;1.54.5&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comGoogleAndroidFilamentFilamentUtilsAndroid27 = &quot;1.54.5&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-google-android-filament-filament-utils-android29 = { module = &quot;com.google.android.filament:filament-utils-android&quot;, version.ref = &quot;comGoogleAndroidFilamentFilamentUtilsAndroid27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-google-android-filament-filament-utils-android29 = { module = &quot;com.google.android.filament:filament-utils-android&quot;, version.ref = &quot;comGoogleAndroidFilamentFilamentUtilsAndroid27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.google.android.filament.filament.utils.android29"
+                robot="true"
+                replacement="libs.com.google.android.filament.filament.utils.android29"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="2008"
+                    endOffset="2067"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="67"
+            column="20"
+            startOffset="2008"
+            endLine="67"
+            endColumn="79"
+            endOffset="2067"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for com-google-android-filament-gltfio-android28"
+            robot="true">
+            <fix-replace
+                description="Replace with comGoogleAndroidFilamentGltfioAndroid27 = &quot;1.54.5&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="comGoogleAndroidFilamentGltfioAndroid27 = &quot;1.54.5&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="62"
+                    endOffset="62"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with com-google-android-filament-gltfio-android28 = { module = &quot;com.google.android.filament:gltfio-android&quot;, version.ref = &quot;comGoogleAndroidFilamentGltfioAndroid27&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="com-google-android-filament-gltfio-android28 = { module = &quot;com.google.android.filament:gltfio-android&quot;, version.ref = &quot;comGoogleAndroidFilamentGltfioAndroid27&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/SourceCode/NoCode/NoCodeBrowser/gradle/libs.versions.toml"
+                    startOffset="511"
+                    endOffset="511"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.com.google.android.filament.gltfio.android28"
+                robot="true"
+                replacement="libs.com.google.android.filament.gltfio.android28"
+                priority="0">
+                <range
+                    file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+                    startOffset="2088"
+                    endOffset="2139"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="68"
+            column="20"
+            startOffset="2088"
+            endLine="68"
+            endColumn="71"
+            endOffset="2139"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.15.0">
+        <fix-replace
+            description="Change to 1.15.0"
+            family="Update versions"
+            oldString="1.13.1"
+            replacement="1.15.0"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="38"
+            column="20"
+            startOffset="713"
+            endLine="38"
+            endColumn="51"
+            endOffset="744"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.compose:compose-bom than 2024.04.01 is available: 2025.03.00">
+        <fix-replace
+            description="Change to 2025.03.00"
+            family="Update versions"
+            oldString="2024.04.01"
+            replacement="2025.03.00"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="41"
+            column="20"
+            startOffset="800"
+            endLine="41"
+            endColumn="71"
+            endOffset="851"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.8.6 is available: 2.8.7">
+        <fix-replace
+            description="Change to 2.8.7"
+            family="Update versions"
+            oldString="2.8.6"
+            replacement="2.8.7"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="45"
+            column="20"
+            startOffset="1035"
+            endLine="45"
+            endColumn="68"
+            endOffset="1083"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.activity:activity-compose than 1.9.2 is available: 1.10.1">
+        <fix-replace
+            description="Change to 1.10.1"
+            family="Update versions"
+            oldString="1.9.2"
+            replacement="1.10.1"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="46"
+            column="20"
+            startOffset="1104"
+            endLine="46"
+            endColumn="62"
+            endOffset="1146"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of com.google.android.material:material than 1.10.0 is available: 1.12.0">
+        <fix-replace
+            description="Change to 1.12.0"
+            family="Update versions"
+            oldString="1.10.0"
+            replacement="1.12.0"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="50"
+            column="20"
+            startOffset="1297"
+            endLine="50"
+            endColumn="65"
+            endOffset="1342"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.navigation:navigation-compose than 2.6.0 is available: 2.8.9">
+        <fix-replace
+            description="Change to 2.8.9"
+            family="Update versions"
+            oldString="2.6.0"
+            replacement="2.8.9"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="51"
+            column="20"
+            startOffset="1363"
+            endLine="51"
+            endColumn="66"
+            endOffset="1409"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.media3:media3-exoplayer than 1.4.1 is available: 1.5.1">
+        <fix-replace
+            description="Change to 1.5.1"
+            family="Update versions"
+            oldString="1.4.1"
+            replacement="1.5.1"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="58"
+            column="20"
+            startOffset="1628"
+            endLine="58"
+            endColumn="60"
+            endOffset="1668"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.media3:media3-exoplayer-dash than 1.4.1 is available: 1.5.1">
+        <fix-replace
+            description="Change to 1.5.1"
+            family="Update versions"
+            oldString="1.4.1"
+            replacement="1.5.1"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="59"
+            column="20"
+            startOffset="1689"
+            endLine="59"
+            endColumn="65"
+            endOffset="1734"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.media3:media3-ui than 1.4.1 is available: 1.5.1">
+        <fix-replace
+            description="Change to 1.5.1"
+            family="Update versions"
+            oldString="1.4.1"
+            replacement="1.5.1"
+            priority="0"/>
+        <location
+            file="${:nocodelibmobile*projectDir}/build.gradle.kts"
+            line="60"
+            column="20"
+            startOffset="1755"
+            endLine="60"
+            endColumn="53"
+            endOffset="1788"/>
+    </incident>
+
+</incidents>

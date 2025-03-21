@@ -88,10 +88,6 @@
         "source": "at.crowdware.nocodelibmobile-media-1.7.0-46:/layout/notification_media_cancel_action.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/layout/abc_screen_toolbar.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/layout/abc_screen_toolbar.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/design_text_input_end_icon.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/design_text_input_end_icon.xml"
     },
@@ -178,10 +174,6 @@
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/design_bottom_sheet_dialog.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/design_bottom_sheet_dialog.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/layout/mtrl_calendar_month.xml",
-        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/mtrl_calendar_month.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/m3_side_sheet_dialog.xml",
@@ -368,20 +360,12 @@
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/material_clock_display_divider.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/layout/exo_player_control_rewind_button.xml",
-        "source": "at.crowdware.nocodelibmobile-media3-ui-1.4.1-38:/layout/exo_player_control_rewind_button.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/material_timepicker_textinput_display.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/material_timepicker_textinput_display.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/material_chip_input_combo.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/layout/material_chip_input_combo.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/layout/exo_player_control_ffwd_button.xml",
-        "source": "at.crowdware.nocodelibmobile-media3-ui-1.4.1-38:/layout/exo_player_control_ffwd_button.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/layout/design_navigation_item_separator.xml",

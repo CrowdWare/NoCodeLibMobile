@@ -96,6 +96,7 @@ class ContentLoader {
         file.appendText("$title|$url\n")
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun removeLink(title: String, url: String) {
         links.removeIf { it.titel == title && it.url == url }
         val file = File(context.filesDir, "links.txt")
