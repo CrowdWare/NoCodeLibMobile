@@ -1,8 +1,0 @@
-1<?xml version="1.0" encoding="utf-8"?>
-2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="at.crowdware.nocodelibmobile" >
-4
-5    <uses-sdk android:minSdkVersion="21" />
-5-->/Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
-6
-7</manifest>

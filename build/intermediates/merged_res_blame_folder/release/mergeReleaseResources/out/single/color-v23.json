@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_edittext.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_default.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_switch_track.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_btn_checkable.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_color_highlight_material.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_btn_colored_text_material.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_spinner.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/color-v23/abc_tint_seek_thumb.xml",
+        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color-v23/abc_tint_seek_thumb.xml"
+    }
+]

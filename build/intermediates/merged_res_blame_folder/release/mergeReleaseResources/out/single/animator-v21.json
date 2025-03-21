@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/animator-v21/m3_appbar_state_list_animator.xml",
+        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/animator-v21/m3_appbar_state_list_animator.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/animator-v21/design_appbar_state_list_animator.xml",
+        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/animator-v21/design_appbar_state_list_animator.xml"
+    }
+]

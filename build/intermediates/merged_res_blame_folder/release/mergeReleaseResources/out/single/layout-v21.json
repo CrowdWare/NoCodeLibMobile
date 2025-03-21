@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/layout-v21/notification_template_icon_group.xml",
+        "source": "at.crowdware.nocodelibmobile-core-1.13.1-28:/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/layout-v21/notification_action_tombstone.xml",
+        "source": "at.crowdware.nocodelibmobile-core-1.13.1-28:/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/layout-v21/notification_template_custom_big.xml",
+        "source": "at.crowdware.nocodelibmobile-core-1.13.1-28:/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "at.crowdware.nocodelibmobile-release-65:/layout-v21/notification_action.xml",
+        "source": "at.crowdware.nocodelibmobile-core-1.13.1-28:/layout-v21/notification_action.xml"
+    }
+]

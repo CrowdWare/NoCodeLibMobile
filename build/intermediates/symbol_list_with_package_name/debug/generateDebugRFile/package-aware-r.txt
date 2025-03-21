@@ -1,0 +1,24 @@
+at.crowdware.nocodelibmobile
+drawable baseline_arrow_drop_down_24
+drawable baseline_arrow_drop_up_24
+drawable icon
+string about
+string add_link
+string add_new_link
+string home
+string icon
+string language_english
+string language_esperanto
+string language_french
+string language_german
+string language_portugues
+string language_spanish
+string links
+string navigation_about
+string navigation_books
+string navigation_home
+string personal_data
+string select_preferred_language
+string settings
+string title
+string url
