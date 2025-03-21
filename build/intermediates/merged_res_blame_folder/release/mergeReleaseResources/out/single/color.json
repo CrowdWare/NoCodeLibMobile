@@ -124,10 +124,6 @@
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/mtrl_switch_track_tint.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_edittext.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_edittext.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/mtrl_fab_bg_color_selector.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/mtrl_fab_bg_color_selector.xml"
     },
@@ -166,10 +162,6 @@
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_tabs_ripple_color.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_tabs_ripple_color.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_seek_thumb.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_seek_thumb.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_search_url_text.xml",
@@ -324,10 +316,6 @@
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/mtrl_fab_icon_text_color_selector.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_btn_checkable.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_btn_checkable.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/material_timepicker_modebutton_tint.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/material_timepicker_modebutton_tint.xml"
     },
@@ -472,10 +460,6 @@
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/material_on_surface_stroke.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_switch_track.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_switch_track.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_navigation_item_icon_tint.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_navigation_item_icon_tint.xml"
     },
@@ -498,10 +482,6 @@
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_chip_ripple_color.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_chip_ripple_color.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_spinner.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_spinner.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/material_personalized_color_secondary_text.xml",
@@ -656,10 +636,6 @@
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_navigation_item_ripple_color.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_tint_default.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_tint_default.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_primary_text_disable_only.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_primary_text_disable_only.xml"
     },
@@ -702,10 +678,6 @@
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_card_ripple_color.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/color/m3_card_ripple_color.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/color/abc_btn_colored_text_material.xml",
-        "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/color/abc_btn_colored_text_material.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/color/m3_slider_active_track_color.xml",

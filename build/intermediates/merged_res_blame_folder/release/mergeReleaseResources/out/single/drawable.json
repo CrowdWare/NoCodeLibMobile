@@ -4,10 +4,6 @@
         "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/drawable/abc_ic_voice_search_api_material.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/drawable/m3_popupmenu_background_overlay.xml",
-        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/drawable/m3_popupmenu_background_overlay.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/drawable/design_snackbar_background.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/drawable/design_snackbar_background.xml"
     },
@@ -446,10 +442,6 @@
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/drawable/material_ic_clear_black_24dp.xml",
         "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/drawable/material_ic_clear_black_24dp.xml"
-    },
-    {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/drawable/mtrl_popupmenu_background_overlay.xml",
-        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/drawable/mtrl_popupmenu_background_overlay.xml"
     },
     {
         "merged": "at.crowdware.nocodelibmobile-release-65:/drawable/mtrl_ic_cancel.xml",

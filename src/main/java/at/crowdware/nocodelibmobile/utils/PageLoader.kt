@@ -471,6 +471,7 @@ fun renderText(element: UIElement.TextElement, dataItem: Any) {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RowScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement) {
     val context = LocalContext.current
@@ -527,6 +528,7 @@ fun RowScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEleme
         )
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement) {
     val context = LocalContext.current
@@ -583,6 +585,7 @@ fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEl
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement, dataItem: Any) {
     val context = LocalContext.current
@@ -664,6 +667,7 @@ fun handleHyperlinkClick(context: Context, url: String) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderButton(
     modifier: Modifier = Modifier,
@@ -771,6 +775,7 @@ fun RenderElement(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun handleButtonClick(
     link: String,
     mainActivity: BaseComposeActivity,

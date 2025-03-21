@@ -8,10 +8,6 @@
         "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/drawable-v21/abc_dialog_material_background.xml"
     },
     {
-        "merged": "at.crowdware.nocodelibmobile-release-65:/drawable-v21/m3_tabs_background.xml",
-        "source": "at.crowdware.nocodelibmobile-material-1.10.0-10:/drawable-v21/m3_tabs_background.xml"
-    },
-    {
         "merged": "at.crowdware.nocodelibmobile-release-65:/drawable-v21/abc_btn_colored_material.xml",
         "source": "at.crowdware.nocodelibmobile-appcompat-1.6.1-33:/drawable-v21/abc_btn_colored_material.xml"
     },
