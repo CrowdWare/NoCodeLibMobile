@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml:2:13-83
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml:2:13-83
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml:2:13-83
+	package
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+		ADDED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml:2:13-83
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+	xmlns:android
+		ADDED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml:2:23-81
+uses-sdk
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml reason: use-sdk injection requested
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+	android:targetSdkVersion
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+		ADDED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+	android:minSdkVersion
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+		ADDED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
+		INJECTED from /Users/art/SourceCode/NoCode/NoCodeLibMobile/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5273101383017999541.xml
