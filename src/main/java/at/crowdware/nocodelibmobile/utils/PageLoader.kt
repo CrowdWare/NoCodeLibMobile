@@ -421,11 +421,6 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
     if (isLoading) {
         CircularProgressIndicator()
     } else {
-        /*for (dataItem in data.value) {
-            for (ele in element.uiElements) {
-                RenderElement(ele, mainActivity, navController, dataItem)
-            }
-        }*/
         LazyColumn (modifier = modifier) {
             items(data.value, key = { it.hashCode() }) { dataItem -> // Explizite Liste verwenden
                 element.uiElements.forEach { ele ->
