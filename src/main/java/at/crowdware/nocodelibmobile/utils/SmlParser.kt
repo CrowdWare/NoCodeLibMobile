@@ -219,7 +219,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         parseNestedElements(extractChildElements(element), row.uiElements as MutableList<UIElement>)
                         elements.add(row)
                     }
-                    "MarkDown" -> {
+                    "Markdown" -> {
                         val md = ((properties["text"] as? PropertyValue.StringValue)?.value ?: "").split("\n").joinToString("\n") { it.trim() }
                         val ele = MarkdownElement(
                             text = md,
