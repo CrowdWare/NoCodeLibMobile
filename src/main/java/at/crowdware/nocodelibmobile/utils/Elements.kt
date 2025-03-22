@@ -160,6 +160,7 @@ sealed class UIElement {
     ) : UIElement()
     data class LazyColumnElement(
         val url: String,
+        val weight: Int,
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
     data class LazyRowElement(
