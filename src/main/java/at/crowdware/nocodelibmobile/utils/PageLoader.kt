@@ -749,7 +749,7 @@ fun renderButton(
             .then(if(element.width > 0)Modifier.width(element.width.dp) else Modifier)
             .then(if(element.height > 0)Modifier.height(element.height.dp) else Modifier),
         colors = colors,
-        onClick =  { handleButtonClick(element.link, mainActivity, navController) }) {
+        onClick =  { handleButtonClick(element.link, mainActivity, navController, dataItem) }) {
         Text(text = element.label)
     }
 }
@@ -945,7 +945,7 @@ fun dynamicImageFromAssets(
                     "none" -> ContentScale.None
                     else -> ContentScale.Fit
                 },
-                modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navcontroller) }
+                modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) }
             )
       } else {
           Text(text = "Image [$filename] not found")
