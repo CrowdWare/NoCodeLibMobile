@@ -61,6 +61,7 @@ import at.crowdware.nocodelibmobile.ui.theme.OnPrimary
 import at.crowdware.nocodelibmobile.ui.theme.Primary
 import at.crowdware.nocodelibmobile.utils.LoadPage
 import at.crowdware.nocodelibmobile.ui.Settings
+import at.crowdware.nocodelibmobile.utils.NavigationManager
 import kotlinx.coroutines.launch
 import java.io.BufferedWriter
 import java.io.File

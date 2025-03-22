@@ -54,6 +54,7 @@ import at.crowdware.nocodelibmobile.BaseComposeActivity
 import at.crowdware.nocodelibmobile.R
 import at.crowdware.nocodelibmobile.ui.theme.OnPrimary
 import at.crowdware.nocodelibmobile.ui.theme.Primary
+import at.crowdware.nocodelibmobile.utils.NavigationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -827,6 +827,7 @@ fun dynamicImageFromAssets(
 ) {
     var cacheName by remember { mutableStateOf("") }
     var fileName = filename
+    var _link = link
     var isExternal  = false
     if (filename.startsWith("<") && filename.endsWith(">")) {
         val fieldName = filename.substring(1, filename.length - 1)
@@ -834,6 +835,16 @@ fun dynamicImageFromAssets(
             val url = dataItem[fieldName] as? String
             fileName = "$url"
             isExternal = true
+        }
+    }
+    if(link.startsWith("<") && link.endsWith(">")) {
+        println("link: $link")
+        val fieldName = link.substring(1, link.length - 1)
+        println("fieldname: $fieldName")
+        if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
+            val value = dataItem[fieldName] as? String
+            _link = "$value"
+            println("value: $_link")
         }
     }
 
@@ -858,7 +869,7 @@ fun dynamicImageFromAssets(
                     "none" -> ContentScale.None
                     else -> ContentScale.Fit
                 },
-                modifier = modifier.clickable { handleButtonClick(link, mainActivity = mainActivity, navcontroller) }
+                modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navcontroller) }
             )
       } else {
           Text(text = "Image [$filename] not found")
