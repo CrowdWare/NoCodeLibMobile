@@ -412,49 +412,12 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
     val url = element.url
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
-
-    LaunchedEffect(url) {
-        data.value = mainActivity.contentLoader.fetchJsonData(url)
-        isLoading = false
-    }
-
-    if (isLoading) {
-        CircularProgressIndicator()
-    } else {
-        LazyColumn (modifier = modifier) {
-            items(data.value, key = { it.hashCode() }) { dataItem -> // Explizite Liste verwenden
-                element.uiElements.forEach { ele ->
-                    RenderElement(element = ele, mainActivity = mainActivity, navController = navController, dataItem = dataItem, isInLazy = true)
-                }
-            }
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyRowElement) {
-    val url = element.url
-    val data = remember { mutableStateOf<List<Any>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
-
+    
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
         isLoading = false
     }
-
-    /*if (isLoading) {
-        CircularProgressIndicator()
-    } else {
-        LazyRow(modifier = modifier) {
-            items(data.value, key = { it.hashCode() }) { dataItem -> // Explizite Liste verwenden
-                element.uiElements.forEach { ele ->
-                    RenderElement(element = ele, mainActivity = mainActivity, navController = navController, dataItem = dataItem, isInLazy = true)
-                }
-            }
-        }
-    }*/
 
     if (isLoading) {
         CircularProgressIndicator()
@@ -474,6 +437,52 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
         // 🔍 Finde LazyContent als konkreten UIElement-Typ
         val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
         LazyColumn(modifier = modifier) {
+            items(data.value, key = { it.hashCode() }) { dataItem ->
+                contentBlock?.uiElements?.forEach { ele ->
+                    RenderElement(
+                        mainActivity = mainActivity,
+                        navController = navController,
+                        element = ele,
+                        dataItem = dataItem,
+                        isInLazy = true
+                    )
+                }
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyRowElement) {
+    val url = element.url
+    val data = remember { mutableStateOf<List<Any>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    val EmptyDataItem = object {}
+
+    LaunchedEffect(url) {
+        data.value = mainActivity.contentLoader.fetchJsonData(url)
+        isLoading = false
+    }
+
+    if (isLoading) {
+        CircularProgressIndicator()
+    } else if (data.value.isEmpty()) {
+        // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
+        val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+        emptyBlock?.uiElements?.forEach { ele ->
+            RenderElement(
+                mainActivity = mainActivity,
+                navController = navController,
+                element = ele,
+                dataItem = EmptyDataItem,
+                isInLazy = false
+            )
+        }
+    } else {
+        // 🔍 Finde LazyContent als konkreten UIElement-Typ
+        val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+        LazyRow(modifier = modifier) {
             items(data.value, key = { it.hashCode() }) { dataItem ->
                 contentBlock?.uiElements?.forEach { ele ->
                     RenderElement(
