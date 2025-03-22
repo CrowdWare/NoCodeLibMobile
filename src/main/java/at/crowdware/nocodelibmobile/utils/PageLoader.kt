@@ -413,7 +413,7 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
-    
+
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
         isLoading = false
@@ -820,7 +820,8 @@ fun RenderElement(
 fun handleButtonClick(
     link: String,
     mainActivity: BaseComposeActivity,
-    navController: NavHostController
+    navController: NavHostController,
+    dataItem: Any
 ) {
     when {
         link.startsWith("page:") -> {
@@ -845,12 +846,34 @@ fun handleButtonClick(
             }
             NavigationManager.navigate("home")
         }
+        link.startsWith("add:") -> {
+            val (listName, uuid) = extractListAndUUID(link.removePrefix("add:"))
+            val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+            val set = prefs.getStringSet(listName, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+            set.add(uuid)
+            prefs.edit().putStringSet(listName, set).apply()
+        }
+        link.startsWith("remove:") -> {
+            val (listName, uuid) = extractListAndUUID(link.removePrefix("remove:"))
+            val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+            val set = prefs.getStringSet(listName, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+            set.remove(uuid)
+            prefs.edit().putStringSet(listName, set).apply()
+        }
         else -> {
             println("Unknown link type: $link")
         }
     }
 }
 
+// ✨ Hilfsfunktion zum Parsen von add:listName[uuid]
+fun extractListAndUUID(linkPart: String): Pair<String, String> {
+    val regex = Regex("""(.*?)\[(.*?)]""")
+    val match = regex.find(linkPart)
+    val listName = match?.groupValues?.get(1) ?: "default"
+    val uuid = match?.groupValues?.get(2) ?: ""
+    return listName to uuid
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
