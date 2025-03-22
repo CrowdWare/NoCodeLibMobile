@@ -459,13 +459,9 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
     if (isLoading) {
         CircularProgressIndicator()
     } else if (data.value.isEmpty()) {
-        element.uiElements.forEach { ele ->
-            println("ele in LazyNoContent: $ele")
-        }
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
         val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
         emptyBlock?.uiElements?.forEach { ele ->
-            //println("ele in LazyNoContent: $ele")
             RenderElement(
                 mainActivity = mainActivity,
                 navController = navController,
@@ -475,15 +471,11 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
             )
         }
     } else {
-        element.uiElements.forEach { ele ->
-            println("ele in LazyContent: $ele")
-        }
         // 🔍 Finde LazyContent als konkreten UIElement-Typ
         val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
         LazyColumn(modifier = modifier) {
             items(data.value, key = { it.hashCode() }) { dataItem ->
                 contentBlock?.uiElements?.forEach { ele ->
-                    //println("ele in LazyContent: $ele")
                     RenderElement(
                         mainActivity = mainActivity,
                         navController = navController,

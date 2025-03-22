@@ -170,7 +170,6 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
             is Tuple7<*, *, *, *, *, *, *> -> {
                 val elementName = (element.t2 as? TokenMatch)?.text
                 val properties = extractProperties(element)
-
                 when (elementName) {
                     "Text" -> {
                         elements.add(
@@ -220,7 +219,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         parseNestedElements(extractChildElements(element), row.uiElements as MutableList<UIElement>)
                         elements.add(row)
                     }
-                    "Markdown" -> {
+                    "MarkDown" -> {
                         val md = ((properties["text"] as? PropertyValue.StringValue)?.value ?: "").split("\n").joinToString("\n") { it.trim() }
                         val ele = MarkdownElement(
                             text = md,
@@ -247,6 +246,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                                 "right" -> { TextAlign.End }
                                 else -> { TextAlign.Unspecified }
                             })
+                        println("MarkDown added")
                         elements.add(ele)
                     }
                     "Button" -> {
@@ -341,6 +341,9 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         val lnc = UIElement.LazyNoContentElement()
                         parseNestedElements(extractChildElements(element), lnc.uiElements as MutableList<UIElement>)
                         elements.add(lnc)
+                    }
+                    else -> {
+                        println("⚠️ Unhandled element type: $elementName")
                     }
                 }
             }
