@@ -332,6 +332,16 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         parseNestedElements(extractChildElements(element), lc.uiElements as MutableList<UIElement>)
                         elements.add(lc)
                     }
+                    "LazyContent" -> {
+                        val lc = UIElement.LazyContentElement()
+                        parseNestedElements(extractChildElements(element), lc.uiElements as MutableList<UIElement>)
+                        elements.add(lc)
+                    }
+                    "LazyNoContent" -> {
+                        val lnc = UIElement.LazyNoContentElement()
+                        parseNestedElements(extractChildElements(element), lnc.uiElements as MutableList<UIElement>)
+                        elements.add(lnc)
+                    }
                 }
             }
         }

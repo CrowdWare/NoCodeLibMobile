@@ -168,6 +168,12 @@ sealed class UIElement {
         val weight: Int,
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
+    data class LazyContentElement(
+        val uiElements: MutableList<UIElement> = mutableListOf()
+    ) : UIElement()
+    data class LazyNoContentElement(
+        val uiElements: MutableList<UIElement> = mutableListOf()
+    ) : UIElement()
 }
 
 data class Padding(val top: Int, val right: Int, val bottom: Int, val left: Int)

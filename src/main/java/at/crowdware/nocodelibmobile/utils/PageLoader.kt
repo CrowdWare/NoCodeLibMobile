@@ -437,13 +437,14 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
     val url = element.url
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
+    val EmptyDataItem = object {}
 
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
         isLoading = false
     }
 
-    if (isLoading) {
+    /*if (isLoading) {
         CircularProgressIndicator()
     } else {
         LazyRow(modifier = modifier) {
@@ -453,7 +454,48 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
                 }
             }
         }
+    }*/
+
+    if (isLoading) {
+        CircularProgressIndicator()
+    } else if (data.value.isEmpty()) {
+        element.uiElements.forEach { ele ->
+            println("ele in LazyNoContent: $ele")
+        }
+        // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
+        val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+        emptyBlock?.uiElements?.forEach { ele ->
+            //println("ele in LazyNoContent: $ele")
+            RenderElement(
+                mainActivity = mainActivity,
+                navController = navController,
+                element = ele,
+                dataItem = EmptyDataItem,
+                isInLazy = false
+            )
+        }
+    } else {
+        element.uiElements.forEach { ele ->
+            println("ele in LazyContent: $ele")
+        }
+        // 🔍 Finde LazyContent als konkreten UIElement-Typ
+        val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+        LazyColumn(modifier = modifier) {
+            items(data.value, key = { it.hashCode() }) { dataItem ->
+                contentBlock?.uiElements?.forEach { ele ->
+                    //println("ele in LazyContent: $ele")
+                    RenderElement(
+                        mainActivity = mainActivity,
+                        navController = navController,
+                        element = ele,
+                        dataItem = dataItem,
+                        isInLazy = true
+                    )
+                }
+            }
+        }
     }
+
 }
 
 @Composable
