@@ -455,10 +455,25 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyRowElement) {
-    val url = element.url
+    var url = element.url
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
+
+    // Prüfen, ob "filter=list:xyz" in der URL enthalten ist
+    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)""")
+    val match = regex.find(url)
+
+    // Wenn vorhanden: Liste laden und UUIDs anhängen
+    if (match != null) {
+        val listName = match.groupValues[1]
+        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+        val uuidSet = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+        // UUIDs an URL anhängen
+        val uuidParams = uuidSet.joinToString("&") { "uuid=$it" }
+        url = url.replace("filter=list:$listName", uuidParams)
+    }
 
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
