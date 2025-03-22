@@ -460,19 +460,28 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
 
-    // Prüfen, ob "filter=list:xyz" in der URL enthalten ist
-    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)""")
+    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
     val match = regex.find(url)
 
-    // Wenn vorhanden: Liste laden und UUIDs anhängen
     if (match != null) {
-        val listName = match.groupValues[1]
-        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
-        val uuidSet = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+        val listName = match.groupValues[1]      // z. B. "favourite"
+        val paramName = match.groupValues[2]     // z. B. "uuid"
 
-        // UUIDs an URL anhängen
-        val uuidParams = uuidSet.joinToString("&") { "uuid=$it" }
-        url = url.replace("filter=list:$listName", uuidParams)
+        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+        val paramString = values.joinToString("&") { "$paramName=$it" }
+
+        // Ersetze kompletten filter-Ausdruck
+        url = url.replace(match.value, paramString)
+
+        // Sicherheitshalber Platzhalterreste entfernen (eher unwahrscheinlich nötig)
+        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
+
+        // Cleanup
+        url = url.replace("&&", "&").trimEnd('&', '?')
+
+        println("resolved url: $url")
     }
 
     LaunchedEffect(url) {
@@ -934,11 +943,9 @@ fun dynamicImageFromAssets(
     if(link.startsWith("<") && link.endsWith(">")) {
         println("link: $link")
         val fieldName = link.substring(1, link.length - 1)
-        println("fieldname: $fieldName")
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val value = dataItem[fieldName] as? String
             _link = "$value"
-            println("value: $_link")
         }
     }
 
