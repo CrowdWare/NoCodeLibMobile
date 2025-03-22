@@ -165,6 +165,7 @@ sealed class UIElement {
     ) : UIElement()
     data class LazyRowElement(
         val url: String,
+        val weight: Int,
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
 }

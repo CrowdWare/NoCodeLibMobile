@@ -207,6 +207,9 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
         is UIElement.LazyColumnElement -> {
             renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity, navController, element)
         }
+        is UIElement.LazyRowElement -> {
+            renderLazyRow(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity, navController, element)
+        }
         is UIElement.TextElement -> {
             renderText(element, dataItem)
         }
@@ -287,7 +290,7 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
             renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity,navController,element)
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(mainActivity,navController,element)
+            renderLazyRow(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity,navController,element)
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)
@@ -435,7 +438,7 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun renderLazyRow(mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyRowElement) {
+fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyRowElement) {
     val url = element.url
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -448,7 +451,7 @@ fun renderLazyRow(mainActivity: BaseComposeActivity, navController: NavHostContr
     if (isLoading) {
         CircularProgressIndicator()
     } else {
-        LazyRow {
+        LazyRow(modifier = modifier) {
             items(data.value, key = { it.hashCode() }) { dataItem -> // Explizite Liste verwenden
                 element.uiElements.forEach { ele ->
                     RenderElement(element = ele, mainActivity = mainActivity, navController = navController, dataItem = dataItem, isInLazy = true)
@@ -718,7 +721,7 @@ fun RenderElement(
             renderLazyColumn(Modifier, mainActivity, navController, element)
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(mainActivity, navController, element)
+            renderLazyRow(Modifier, mainActivity, navController, element)
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)

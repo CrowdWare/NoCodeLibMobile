@@ -327,6 +327,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
 
                         val lc = UIElement.LazyRowElement(
                             url = (properties["url"] as? PropertyValue.StringValue)?.value ?: "",
+                            weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
                         )
                         parseNestedElements(extractChildElements(element), lc.uiElements as MutableList<UIElement>)
                         elements.add(lc)
