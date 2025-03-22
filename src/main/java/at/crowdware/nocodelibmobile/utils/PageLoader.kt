@@ -409,10 +409,59 @@ fun renderRow(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement.LazyColumnElement) {
-    val url = element.url
+    var url = element.url
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
+
+    /*
+    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
+    val match = regex.find(url)
+
+    if (match != null) {
+        val listName = match.groupValues[1]      // z. B. "favourite"
+        val paramName = match.groupValues[2]     // z. B. "uuid"
+
+        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+        val paramString = values.joinToString("&") { "$paramName=$it" }
+
+        // Ersetze kompletten filter-Ausdruck
+        url = url.replace(match.value, paramString)
+
+        // Sicherheitshalber Platzhalterreste entfernen (eher unwahrscheinlich nötig)
+        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
+
+        // Cleanup
+        url = url.replace("&&", "&").trimEnd('&', '?')
+    }
+*/
+    val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
+    val match = regex.find(url)
+
+    if (match != null) {
+        val isNegated = match.groupValues[1] == "notInList"
+        val listName = match.groupValues[2]      // z. B. "favourite"
+        val paramName = match.groupValues[3]     // z. B. "uuid"
+
+        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+        val replacement = if (!isNegated) {
+            values.joinToString("&") { "$paramName=$it" }
+        } else {
+            values.joinToString("&") { "exclude=$paramName:$it" }
+        }
+
+        url = url.replace(match.value, replacement)
+
+        // Sicherheitshalber Platzhalterreste entfernen
+        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
+
+        // Cleanup
+        url = url.replace("&&", "&").trimEnd('&', '?')
+    }
 
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
@@ -459,7 +508,7 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
-
+/*
     val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
     val match = regex.find(url)
 
@@ -480,10 +529,35 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
 
         // Cleanup
         url = url.replace("&&", "&").trimEnd('&', '?')
-
-        println("resolved url: $url")
     }
+*/
 
+    val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
+    val match = regex.find(url)
+
+    if (match != null) {
+        val isNegated = match.groupValues[1] == "notInList"
+        val listName = match.groupValues[2]      // z. B. "favourite"
+        val paramName = match.groupValues[3]     // z. B. "uuid"
+
+        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+        val replacement = if (!isNegated) {
+            values.joinToString("&") { "$paramName=$it" }
+        } else {
+            values.joinToString("&") { "exclude=$paramName:$it" }
+        }
+
+        url = url.replace(match.value, replacement)
+
+        // Sicherheitshalber Platzhalterreste entfernen
+        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
+
+        // Cleanup
+        url = url.replace("&&", "&").trimEnd('&', '?')
+    }
+    
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
         isLoading = false
@@ -941,7 +1015,6 @@ fun dynamicImageFromAssets(
         }
     }
     if(link.startsWith("<") && link.endsWith(">")) {
-        println("link: $link")
         val fieldName = link.substring(1, link.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val value = dataItem[fieldName] as? String
