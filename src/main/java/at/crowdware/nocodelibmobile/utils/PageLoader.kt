@@ -862,14 +862,14 @@ fun handleButtonClick(
             NavigationManager.navigate("home")
         }
         link.startsWith("add:") -> {
-            val (listName, uuid) = extractListAndUUID(link.removePrefix("add:"))
+            val (listName, uuid) = extractListAndUUID(link.removePrefix("add:"), dataItem)
             val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
             val set = prefs.getStringSet(listName, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
             set.add(uuid)
             prefs.edit().putStringSet(listName, set).apply()
         }
         link.startsWith("remove:") -> {
-            val (listName, uuid) = extractListAndUUID(link.removePrefix("remove:"))
+            val (listName, uuid) = extractListAndUUID(link.removePrefix("remove:"), dataItem)
             val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
             val set = prefs.getStringSet(listName, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
             set.remove(uuid)
@@ -882,12 +882,30 @@ fun handleButtonClick(
 }
 
 // ✨ Hilfsfunktion zum Parsen von add:listName[uuid]
-fun extractListAndUUID(linkPart: String): Pair<String, String> {
+fun extractListAndUUID(linkPart: String, dataItem: Any): Pair<String, String> {
     val regex = Regex("""(.*?)\[(.*?)]""")
     val match = regex.find(linkPart)
     val listName = match?.groupValues?.get(1) ?: "default"
-    val uuid = match?.groupValues?.get(2) ?: ""
+    var uuid = match?.groupValues?.get(2) ?: ""
+
+    if (uuid.startsWith("<") && uuid.endsWith(">")) {
+        val fieldName = uuid.substring(1, uuid.length - 1)
+        if (dataItem is Map<*, *>) {
+            uuid = dataItem[fieldName] as? String ?: ""
+        }
+    }
+
     return listName to uuid
+}
+
+fun getPropertyFromDataItem(dataItem: Any, propertyName: String): String {
+    return try {
+        val prop = dataItem::class.members.firstOrNull { it.name == propertyName }
+        val value = prop?.call(dataItem)?.toString()
+        value ?: ""
+    } catch (e: Exception) {
+        ""
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
