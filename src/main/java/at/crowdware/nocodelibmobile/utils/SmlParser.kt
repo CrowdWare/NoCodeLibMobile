@@ -33,7 +33,6 @@ import at.crowdware.nocodelibmobile.utils.UIElement.ImageElement
 import at.crowdware.nocodelibmobile.utils.UIElement.MarkdownElement
 import at.crowdware.nocodelibmobile.utils.Padding
 import at.crowdware.nocodelibmobile.utils.Page
-import at.crowdware.nocodelibmobile.utils.PageElement
 import at.crowdware.nocodelibmobile.utils.UIElement.RowElement
 import at.crowdware.nocodelibmobile.utils.UIElement.SoundElement
 import at.crowdware.nocodelibmobile.utils.UIElement.SpacerElement
@@ -433,7 +432,11 @@ fun parseNestedDeployElements(nestedElements: List<Any>, deployment: DeploymentE
     }
 }
 
-fun parsePage(sml: String): Page? {
+fun parsePage(sml: String, name: String): Page? {
+    if(sml.isEmpty()) {
+        println("An error occurred while parsing a page [$name]. Content is empty.")
+        return null
+    }
     try {
         val result = SmlGrammar.parseToEnd(sml)
         return deserializePage(result)
@@ -445,6 +448,10 @@ fun parsePage(sml: String): Page? {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun parseApp(sml: String): App? {
+    if(sml.isEmpty()) {
+        println("An error occurred while parsing a app. Content is empty.")
+        return null
+    }
     try {
         val result = SmlGrammar.parseToEnd(sml)
         return deserializeApp(result)

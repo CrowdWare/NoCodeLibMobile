@@ -109,7 +109,6 @@ class ContentLoader {
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadAsset(name: String, subdir: String, isExternal: Boolean = false): String {
-        //var fileContent: ByteArray? = null
         if(app == null) {
             return ""
         }
@@ -129,7 +128,9 @@ class ContentLoader {
             else
                 ""
         } else {
+            val lang = "-eo"
             val result = app!!.deployment.files.find { it.path == name }
+            //val result = app!!.deployment.files.find { it.path == "$name.sml" && it.type == "parts$lang"}
             if (result == null) {
                 return ""
             }
@@ -159,6 +160,43 @@ class ContentLoader {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun loadPart(name: String): String {
+        if (app == null) {
+            return ""
+        }
+        val lang = "-eo"
+        val url = "$appUrl/parts$lang/$name"
+        val result = app!!.deployment.files.find { it.path == "$name" && it.type == "part$lang"}
+        if (result == null) {
+            return ""
+        }
+        val fileName =
+            ("ContentCache/" + appUrl.substringAfter("://") + "/parts$lang/").replace(".", "_")
+                .replace(":", "_") + name
+
+
+        val file = File(context.filesDir, fileName)
+        var ret = true
+        if (file.exists()) {
+            val lastModifiedMillis = file.lastModified()
+            val lastModifiedDateTime = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(lastModifiedMillis),
+                ZoneId.systemDefault()
+            )
+            if (result.time.isAfter(lastModifiedDateTime)) {
+                // web server version is newer
+                ret = loadAndCacheAsset(url, fileName, result.time)
+            }
+        } else {
+            ret = loadAndCacheAsset(url, fileName, result.time)
+        }
+        return if (ret)
+            fileName
+        else
+            ""
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun switchApp(url: String) {
         if(url != appUrl) {
             val app = loadApp(url+ "/app.sml")
@@ -171,8 +209,10 @@ class ContentLoader {
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadPage(name: String, activity: BaseComposeActivity): Page? {
         var lang = "-" + LocaleManager.getLanguage()
-        if (appUrl != activity.getBaseUrl().substringBefore("/app.sml"))
-            lang = "" // only one language for books, for now
+        //if (appUrl != activity.getBaseUrl().substringBefore("/app.sml")) {
+            // appUrl differs from initial url, because a book is loaded with a different url
+            //lang = "" // only one language for books, for now
+        //}
         var fileContent = ""
         val url = "$appUrl/pages$lang/$name.sml"
         if (app == null)
@@ -188,17 +228,20 @@ class ContentLoader {
             val lastModifiedDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(lastModifiedMillis), ZoneId.systemDefault())
             if (result.time.isAfter(lastModifiedDateTime)) {
                 // web server version is newer
+                println("loadAndCache: $url, $fileName")
                 loadAndCacheSml(url, fileName, result.time) ?: ""
             } else {
                 // use cache version instead
                 file.readText()
             }
         } else {
+            println("loadAndCache: $url, $fileName")
             loadAndCacheSml(url, fileName, result.time) ?: ""
         }
-        var page = parsePage(fileContent)
+        var page = parsePage(fileContent, "$name/$lang")
         if (page == null) {
-            page = parsePage("Page { Column { padding: \"16\" Text { color: \"#FF0000\" fontSize: 18 text:\"An error occurred loading the home page.\"}}}")
+            page = parsePage(
+                "Page { Column { padding: \"16\" Text { color: \"#FF0000\" fontSize: 18 text:\"An error occurred loading the home page.\"}}}", name)
         }
         return page
     }

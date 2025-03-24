@@ -616,7 +616,7 @@ fun RowScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEleme
     if (element.part.isNotEmpty()) {
         LaunchedEffect(element.part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadAsset(element.part, "parts")
+                mainActivity.contentLoader.loadPart(element.part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -673,7 +673,7 @@ fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEl
     if (element.part.isNotEmpty()) {
         LaunchedEffect(element.part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadAsset(element.part, "parts")
+                mainActivity.contentLoader.loadPart(element.part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -730,7 +730,7 @@ fun renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement, dataI
     if (element.part.isNotEmpty()) {
         LaunchedEffect(element.part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadAsset(element.part, "parts")
+                mainActivity.contentLoader.loadPart(element.part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -1084,13 +1084,12 @@ fun asyncImage(
 ) {
     var fileName = filename
     var _link = link
-    var isExternal = false
+
     if (filename.startsWith("<") && filename.endsWith(">")) {
         val fieldName = filename.substring(1, filename.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val url = dataItem[fieldName] as? String
             fileName = "$url"
-            isExternal = true
         }
     }
     if (link.startsWith("<") && link.endsWith(">")) {
@@ -1106,22 +1105,6 @@ fun asyncImage(
         model = fileName,
         contentDescription = null,
     )
-    /*
-            AsyncImage(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = null,
-                contentScale = when(scale) {
-                    "crop" -> ContentScale.Crop
-                    "fit" -> ContentScale.Fit
-                    "inside" -> ContentScale.Inside
-                    "fillwidth" -> ContentScale.FillWidth
-                    "fillbounds" -> ContentScale.FillBounds
-                    "fillheight" -> ContentScale.FillHeight
-                    "none" -> ContentScale.None
-                    else -> ContentScale.Fit
-                },
-                modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) }
-            )*/
 }
 
 
