@@ -5,6 +5,7 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -16,12 +17,12 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0" // oder passend zu deinem Compose BOM
+        kotlinCompilerExtensionVersion = "1.5.10"  //"1.5.0" // oder passend zu deinem Compose BOM
     }
 
     defaultConfig {
         minSdk = 29
-        targetSdk = 33
+        targetSdk = 34
     }
 
     compileOptions {
@@ -66,4 +67,11 @@ dependencies {
     implementation("com.google.android.filament:filament-android:1.54.5")
     implementation("com.google.android.filament:filament-utils-android:1.54.5")
     implementation("com.google.android.filament:gltfio-android:1.54.5")
+
+    // async image
+    implementation("io.coil-kt.coil3:coil-compose:3.1.0")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.1.0")
+
+    // 👇 NEU ab Kotlin 2.0 – explizit hinzufügen!
+    implementation("androidx.compose.compiler:compiler:1.5.10")
 }

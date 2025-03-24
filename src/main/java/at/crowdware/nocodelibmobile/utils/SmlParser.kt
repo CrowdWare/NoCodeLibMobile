@@ -246,7 +246,6 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                                 "right" -> { TextAlign.End }
                                 else -> { TextAlign.Unspecified }
                             })
-                        println("MarkDown added")
                         elements.add(ele)
                     }
                     "Button" -> {
@@ -273,6 +272,17 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
                             height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
                             weight =  (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0
+                        )
+                        elements.add(img)
+                    }
+                    "AsyncImage" -> {
+                        val img = UIElement.AsyncImageElement(
+                            src = (properties["src"] as? PropertyValue.StringValue)?.value ?: "",
+                            scale = (properties["scale"] as? PropertyValue.StringValue)?.value ?: "1",
+                            link = (properties["link"] as? PropertyValue.StringValue)?.value ?: "",
+                            width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
+                            height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
+                            weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0
                         )
                         elements.add(img)
                     }

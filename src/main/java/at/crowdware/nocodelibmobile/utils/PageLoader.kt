@@ -96,6 +96,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.ByteBuffer
+import coil3.compose.AsyncImage
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -248,6 +249,29 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
                 )
             }
         }
+        is UIElement.AsyncImageElement -> {
+            if (isInLazy) {
+                asyncImage(
+                    modifier = Modifier.width(element.width.dp),
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+            } else {
+                asyncImage(
+                    modifier = if (element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                    mainActivity = mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem = dataItem
+                )
+            }
+        }
         is UIElement.VideoElement -> {
             dynamicVideofromAssets(modifier = if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity = mainActivity, filename = element.src, dataItem = dataItem)
         }
@@ -320,6 +344,33 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
                 )
             } else {
                 dynamicImageFromAssets(
+                    modifier = if (element.weight > 0) {
+                        Modifier.weight(element.weight.toFloat())
+                    } else {
+                        Modifier
+                    },
+                    mainActivity = mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem = dataItem
+                )
+            }
+        }
+        is UIElement.AsyncImageElement -> {
+            if (isInLazy) {
+                asyncImage(
+                    modifier = Modifier.width(element.width.dp),
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+            } else {
+                asyncImage(
                     modifier = if (element.weight > 0) {
                         Modifier.weight(element.weight.toFloat())
                     } else {
@@ -414,29 +465,6 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
 
-    /*
-    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
-    val match = regex.find(url)
-
-    if (match != null) {
-        val listName = match.groupValues[1]      // z. B. "favourite"
-        val paramName = match.groupValues[2]     // z. B. "uuid"
-
-        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
-        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
-
-        val paramString = values.joinToString("&") { "$paramName=$it" }
-
-        // Ersetze kompletten filter-Ausdruck
-        url = url.replace(match.value, paramString)
-
-        // Sicherheitshalber Platzhalterreste entfernen (eher unwahrscheinlich nötig)
-        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-
-        // Cleanup
-        url = url.replace("&&", "&").trimEnd('&', '?')
-    }
-*/
     val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
     val match = regex.find(url)
 
@@ -453,13 +481,8 @@ fun renderLazyColumn(modifier: Modifier, mainActivity: BaseComposeActivity, navC
         } else {
             values.joinToString("&") { "exclude=$paramName:$it" }
         }
-
         url = url.replace(match.value, replacement)
-
-        // Sicherheitshalber Platzhalterreste entfernen
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-
-        // Cleanup
         url = url.replace("&&", "&").trimEnd('&', '?')
     }
 
@@ -508,29 +531,6 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
     val data = remember { mutableStateOf<List<Any>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val EmptyDataItem = object {}
-/*
-    val regex = Regex("""filter=list:([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
-    val match = regex.find(url)
-
-    if (match != null) {
-        val listName = match.groupValues[1]      // z. B. "favourite"
-        val paramName = match.groupValues[2]     // z. B. "uuid"
-
-        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
-        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
-
-        val paramString = values.joinToString("&") { "$paramName=$it" }
-
-        // Ersetze kompletten filter-Ausdruck
-        url = url.replace(match.value, paramString)
-
-        // Sicherheitshalber Platzhalterreste entfernen (eher unwahrscheinlich nötig)
-        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-
-        // Cleanup
-        url = url.replace("&&", "&").trimEnd('&', '?')
-    }
-*/
 
     val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
     val match = regex.find(url)
@@ -548,15 +548,9 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
         } else {
             values.joinToString("&") { "exclude=$paramName:$it" }
         }
-
         url = url.replace(match.value, replacement)
-
-        // Sicherheitshalber Platzhalterreste entfernen
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-
-        // Cleanup
         url = url.replace("&&", "&").trimEnd('&', '?')
-        println("url: $url")
     }
 
     LaunchedEffect(url) {
@@ -893,6 +887,30 @@ fun RenderElement(
 
             }
         }
+        is UIElement.AsyncImageElement -> {
+            if (isInLazy) {
+                asyncImage(
+                    modifier = Modifier.width(element.width.dp),
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+            } else {
+                asyncImage(
+                    modifier = Modifier,
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+
+            }
+        }
         is UIElement.VideoElement -> {
             dynamicVideofromAssets(modifier = Modifier, mainActivity = mainActivity, filename = element.src, dataItem = dataItem)
         }
@@ -1053,6 +1071,60 @@ fun dynamicImageFromAssets(
         Text(text = "Image [$filename] not loaded")
     }
 }
+
+@Composable
+fun asyncImage(
+    modifier: Modifier = Modifier,
+    mainActivity: BaseComposeActivity,
+    navcontroller: NavHostController,
+    filename: String,
+    scale: String,
+    link: String,
+    dataItem: Any
+) {
+    var fileName = filename
+    var _link = link
+    var isExternal = false
+    if (filename.startsWith("<") && filename.endsWith(">")) {
+        val fieldName = filename.substring(1, filename.length - 1)
+        if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
+            val url = dataItem[fieldName] as? String
+            fileName = "$url"
+            isExternal = true
+        }
+    }
+    if (link.startsWith("<") && link.endsWith(">")) {
+        val fieldName = link.substring(1, link.length - 1)
+        if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
+            val value = dataItem[fieldName] as? String
+            _link = "$value"
+        }
+    }
+    println("asyncImage: $fileName")
+    AsyncImage(
+        modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) },
+        model = fileName,
+        contentDescription = null,
+    )
+    /*
+            AsyncImage(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                contentScale = when(scale) {
+                    "crop" -> ContentScale.Crop
+                    "fit" -> ContentScale.Fit
+                    "inside" -> ContentScale.Inside
+                    "fillwidth" -> ContentScale.FillWidth
+                    "fillbounds" -> ContentScale.FillBounds
+                    "fillheight" -> ContentScale.FillHeight
+                    "none" -> ContentScale.None
+                    else -> ContentScale.Fit
+                },
+                modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) }
+            )*/
+}
+
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
