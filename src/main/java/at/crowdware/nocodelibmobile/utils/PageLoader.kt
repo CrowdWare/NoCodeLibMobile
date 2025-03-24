@@ -556,8 +556,9 @@ fun renderLazyRow(modifier: Modifier, mainActivity: BaseComposeActivity, navCont
 
         // Cleanup
         url = url.replace("&&", "&").trimEnd('&', '?')
+        println("url: $url")
     }
-    
+
     LaunchedEffect(url) {
         data.value = mainActivity.contentLoader.fetchJsonData(url)
         isLoading = false
