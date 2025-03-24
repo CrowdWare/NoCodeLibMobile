@@ -1100,7 +1100,7 @@ fun asyncImage(
             _link = "$value"
         }
     }
-    println("asyncImage: $fileName")
+  
     AsyncImage(
         modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) },
         model = fileName,
