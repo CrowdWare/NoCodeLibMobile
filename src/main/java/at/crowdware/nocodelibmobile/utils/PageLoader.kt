@@ -45,6 +45,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -52,9 +53,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -1082,14 +1087,14 @@ fun asyncImage(
     link: String,
     dataItem: Any
 ) {
-    var fileName = filename
+    var model = filename
     var _link = link
 
     if (filename.startsWith("<") && filename.endsWith(">")) {
         val fieldName = filename.substring(1, filename.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val url = dataItem[fieldName] as? String
-            fileName = "$url"
+            model = "$url"
         }
     }
     if (link.startsWith("<") && link.endsWith(">")) {
@@ -1099,12 +1104,48 @@ fun asyncImage(
             _link = "$value"
         }
     }
-
+    /*
     AsyncImage(
         modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) },
-        model = fileName,
-        contentDescription = null,
-    )
+        model = model,
+        contentScale = when(scale) {
+            "crop" -> ContentScale.Crop
+            "fit" -> ContentScale.Fit
+            "inside" -> ContentScale.Inside
+            "fillwidth" -> ContentScale.FillWidth
+            "fillbounds" -> ContentScale.FillBounds
+            "fillheight" -> ContentScale.FillHeight
+            "none" -> ContentScale.None
+            else -> ContentScale.Fit
+        },
+        contentDescription = null
+    )*/
+
+    Box(
+        modifier = Modifier.height(210.dp).width(140.dp)
+    ) {
+        AsyncImage(
+            model = model,
+            contentDescription = "Bild",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+
+        IconButton(
+            onClick = { /* TODO: Handle Click */ },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(0.dp)
+                .size(48.dp)
+        ) {
+            Icon(
+                modifier = Modifier.size(32.dp),
+                imageVector = Icons.Default.Favorite,
+                contentDescription = "Like",
+                tint = Color.Red
+            )
+        }
+    }
 }
 
 
