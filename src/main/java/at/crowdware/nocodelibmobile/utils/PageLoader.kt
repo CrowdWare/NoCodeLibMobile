@@ -36,6 +36,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -209,6 +210,9 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
         }
         is UIElement.RowElement -> {
             renderRow(mainActivity, navController, element, dataItem)
+        }
+        is UIElement.BoxElement -> {
+            renderBox(mainActivity, navController, element, dataItem)
         }
         is UIElement.LazyColumnElement -> {
             renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity, navController, element)
@@ -420,6 +424,128 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
+fun BoxScope.RenderElement(mainActivity: BaseComposeActivity, navController: NavHostController, element: UIElement, dataItem: Any, isInLazy: Boolean = false) {
+    when(element) {
+        is UIElement.ColumnElement -> {
+            renderColumn(mainActivity, navController, modifier = Modifier, element, dataItem, isInLazy = isInLazy)
+        }
+        is UIElement.RowElement -> {
+            renderRow(mainActivity, navController, element, dataItem)
+        }
+        is UIElement.BoxElement -> {
+            renderBox(mainActivity, navController, element, dataItem)
+        }
+        is UIElement.LazyColumnElement -> {
+            renderLazyColumn(modifier =  Modifier, mainActivity, navController, element)
+        }
+        is UIElement.LazyRowElement -> {
+            renderLazyRow(modifier =  Modifier, mainActivity, navController, element)
+        }
+        is UIElement.TextElement -> {
+            renderText(element, dataItem)
+        }
+        is UIElement.MarkdownElement -> {
+            renderMarkdown(modifier = Modifier, element, dataItem = dataItem)
+        }
+        is UIElement.ButtonElement -> {
+            renderButton(
+                modifier = Modifier,
+                element = element,
+                mainActivity = mainActivity,
+                navController = navController,
+                dataItem = dataItem
+            )
+        }
+        is UIElement.ImageElement -> {
+            if (isInLazy) {
+                val alignment = if (element.align.isNotEmpty()) element.align.toAlignment() else Alignment.TopStart
+                dynamicImageFromAssets(
+                    modifier = Modifier.width(element.width.dp).align(alignment),
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+            } else {
+                dynamicImageFromAssets(
+                    modifier = Modifier,
+                    mainActivity = mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem = dataItem
+                )
+            }
+        }
+        is UIElement.AsyncImageElement -> {
+            if (isInLazy) {
+                asyncImage(
+                    modifier = Modifier.width(element.width.dp),
+                    mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem
+                )
+            } else {
+                asyncImage(
+                    modifier = Modifier,
+                    mainActivity = mainActivity,
+                    navcontroller = navController,
+                    filename = element.src,
+                    scale = element.scale,
+                    link = element.link,
+                    dataItem = dataItem
+                )
+            }
+        }
+        is UIElement.VideoElement -> {
+            dynamicVideofromAssets(modifier = Modifier, mainActivity = mainActivity, filename = element.src, dataItem = dataItem)
+        }
+        is UIElement.SoundElement -> {
+            dynamicSoundfromAssets(mainActivity, element.src, dataItem)
+        }
+        is UIElement.YoutubeElement -> {
+            dynamicYoutube(modifier = Modifier, videoId = element.id, dataItem = dataItem)
+        }
+        is UIElement.SceneElement -> {
+            dynamicScene(
+                modifier = Modifier,
+                element,
+                dataItem
+            )
+        }
+        is UIElement.SpacerElement -> {
+            var mod = Modifier as Modifier
+            if (element.amount > 0)
+                mod = mod.then(Modifier.width(element.amount.dp))
+            Spacer(modifier = mod)
+        }
+        else -> {}
+    }
+}
+
+fun String.toAlignment(): Alignment {
+    return when (this) {
+        "topStart" -> Alignment.TopStart
+        "topCenter" -> Alignment.TopCenter
+        "topEnd" -> Alignment.TopEnd
+        "centerStart" -> Alignment.CenterStart
+        "center" -> Alignment.Center
+        "centerEnd" -> Alignment.CenterEnd
+        "bottomStart" -> Alignment.BottomStart
+        "bottomCenter" -> Alignment.BottomCenter
+        "bottomEnd" -> Alignment.BottomEnd
+        else -> Alignment.TopStart // Default fallback
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
 fun renderColumn(
     mainActivity: BaseComposeActivity,
     navcontroller: NavHostController,
@@ -456,6 +582,28 @@ fun renderRow(
         start = element.padding.left.dp,
         end = element.padding.right.dp
     )) {
+        for (ele in element.uiElements) {
+            RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy)
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun renderBox(
+    mainActivity: BaseComposeActivity,
+    navController: NavHostController,
+    element: UIElement.BoxElement,
+    dataItem: Any,
+    isInLazy: Boolean = false
+) {
+    Box (
+        modifier = Modifier.padding(
+            top = element.padding.top.dp,
+            bottom = element.padding.bottom.dp,
+            start = element.padding.left.dp,
+            end = element.padding.right.dp
+        )) {
         for (ele in element.uiElements) {
             RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy)
         }
@@ -1104,7 +1252,7 @@ fun asyncImage(
             _link = "$value"
         }
     }
-    /*
+
     AsyncImage(
         modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) },
         model = model,
@@ -1119,8 +1267,9 @@ fun asyncImage(
             else -> ContentScale.Fit
         },
         contentDescription = null
-    )*/
+    )
 
+    /*
     Box(
         modifier = Modifier.height(210.dp).width(140.dp)
     ) {
@@ -1145,7 +1294,7 @@ fun asyncImage(
                 tint = Color.Red
             )
         }
-    }
+    }*/
 }
 
 

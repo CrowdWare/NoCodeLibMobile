@@ -110,6 +110,7 @@ sealed class UIElement {
         val weight: Int,
         val width: Int,
         val height: Int,
+        val align: String,
         val link: String) : UIElement()
     data class AsyncImageElement(
         val src: String,
@@ -141,6 +142,13 @@ sealed class UIElement {
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
     data class ColumnElement(
+        val padding: Padding,
+        val weight: Int,
+        val width: Int,
+        val height: Int,
+        val uiElements: MutableList<UIElement> = mutableListOf()
+    ) : UIElement()
+    data class BoxElement(
         val padding: Padding,
         val weight: Int,
         val width: Int,

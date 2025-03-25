@@ -218,6 +218,16 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         parseNestedElements(extractChildElements(element), row.uiElements as MutableList<UIElement>)
                         elements.add(row)
                     }
+                    "Box" -> {
+                        val box = RowElement(
+                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
+                            width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
+                            height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
+                            weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
+                        )
+                        parseNestedElements(extractChildElements(element), box.uiElements as MutableList<UIElement>)
+                        elements.add(box)
+                    }
                     "Markdown" -> {
                         val md = ((properties["text"] as? PropertyValue.StringValue)?.value ?: "").split("\n").joinToString("\n") { it.trim() }
                         val ele = MarkdownElement(
@@ -270,7 +280,8 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                             link = (properties["link"] as? PropertyValue.StringValue)?.value ?: "",
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
                             height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
-                            weight =  (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0
+                            weight =  (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
+                            align = (properties["align"] as? PropertyValue.StringValue)?.value ?: ""
                         )
                         elements.add(img)
                     }
