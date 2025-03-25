@@ -30,8 +30,10 @@ import android.view.Choreographer
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +44,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -318,6 +321,9 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
         }
         is UIElement.RowElement -> {
             renderRow(mainActivity, navController, element, dataItem, isInLazy = isInLazy)
+        }
+        is UIElement.BoxElement -> {
+            renderBox(mainActivity, navController, element, dataItem, isInLazy = isInLazy)
         }
         is UIElement.LazyColumnElement -> {
             renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity,navController,element)
@@ -597,13 +603,19 @@ fun renderBox(
     dataItem: Any,
     isInLazy: Boolean = false
 ) {
-    Box (
-        modifier = Modifier.padding(
-            top = element.padding.top.dp,
-            bottom = element.padding.bottom.dp,
-            start = element.padding.left.dp,
-            end = element.padding.right.dp
-        )) {
+    Box(
+        modifier = Modifier
+            .padding(
+                top = element.padding.top.dp,
+                bottom = element.padding.bottom.dp,
+                start = element.padding.left.dp,
+                end = element.padding.right.dp
+            )
+            .then(if (element.width > 0) Modifier.width(element.width.dp) else Modifier)
+            .then(if (element.height > 0) Modifier.height(element.height.dp) else Modifier)
+            //.border(BorderStroke(5.dp, Color.Black))
+    ) {
+        println("inBox")
         for (ele in element.uiElements) {
             RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy)
         }
@@ -1000,6 +1012,9 @@ fun RenderElement(
         }
         is UIElement.RowElement -> {
             renderRow(mainActivity, navController, element, dataItem)
+        }
+        is UIElement.BoxElement -> {
+            renderBox(mainActivity, navController, element, dataItem)
         }
         is UIElement.LazyColumnElement -> {
             renderLazyColumn(Modifier, mainActivity, navController, element)

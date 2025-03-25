@@ -219,8 +219,10 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         elements.add(row)
                     }
                     "Box" -> {
-                        val box = RowElement(
-                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
+                        val box = UIElement.BoxElement(
+                            padding = parsePadding(
+                                (properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"
+                            ),
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
                             height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
                             weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
