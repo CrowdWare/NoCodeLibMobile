@@ -128,9 +128,7 @@ class ContentLoader {
             else
                 ""
         } else {
-            val lang = "-eo"
             val result = app!!.deployment.files.find { it.path == name }
-            //val result = app!!.deployment.files.find { it.path == "$name.sml" && it.type == "parts$lang"}
             if (result == null) {
                 return ""
             }
@@ -164,9 +162,9 @@ class ContentLoader {
         if (app == null) {
             return ""
         }
-        val lang = "-eo"
+        val lang = "-" + LocaleManager.getLanguage()
         val url = "$appUrl/parts$lang/$name"
-        val result = app!!.deployment.files.find { it.path == "$name" && it.type == "part$lang"}
+        val result = app!!.deployment.files.find { it.path == name && it.type == "part$lang"}
         if (result == null) {
             return ""
         }
@@ -208,11 +206,7 @@ class ContentLoader {
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadPage(name: String, activity: BaseComposeActivity): Page? {
-        var lang = "-" + LocaleManager.getLanguage()
-        //if (appUrl != activity.getBaseUrl().substringBefore("/app.sml")) {
-            // appUrl differs from initial url, because a book is loaded with a different url
-            //lang = "" // only one language for books, for now
-        //}
+        val lang = "-" + LocaleManager.getLanguage()
         var fileContent = ""
         val url = "$appUrl/pages$lang/$name.sml"
         if (app == null)
