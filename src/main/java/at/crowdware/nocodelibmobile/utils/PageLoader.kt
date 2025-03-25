@@ -613,9 +613,7 @@ fun renderBox(
             )
             .then(if (element.width > 0) Modifier.width(element.width.dp) else Modifier)
             .then(if (element.height > 0) Modifier.height(element.height.dp) else Modifier)
-            //.border(BorderStroke(5.dp, Color.Black))
     ) {
-        println("inBox")
         for (ele in element.uiElements) {
             RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy)
         }
