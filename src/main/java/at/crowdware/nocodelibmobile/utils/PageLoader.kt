@@ -693,7 +693,6 @@ fun renderLazyColumn(
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
         url = url.replace("&&", "&").trimEnd('&', '?')
         if (isNegated && values.isEmpty()){
-            println("list is empty")
             data.value = emptyList()
             isLoading = false
         }
@@ -701,7 +700,6 @@ fun renderLazyColumn(
 
     LaunchedEffect(url) {
         if (isLoading) {
-            println("loading")
             data.value = mainActivity.contentLoader.fetchJsonData(url)
             isLoading = false
         }
@@ -709,7 +707,6 @@ fun renderLazyColumn(
     if (isLoading) {
         CircularProgressIndicator()
     } else if (data.value.isEmpty()) {
-        println("list is empty 2")
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
         val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
         emptyBlock?.uiElements?.forEach { ele ->
@@ -775,7 +772,6 @@ fun renderLazyRow(
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
         url = url.replace("&&", "&").trimEnd('&', '?')
         if (isNegated && values.isEmpty()) {
-            println("list is empty")
             data.value = emptyList()
             isLoading = false
         }
@@ -784,7 +780,6 @@ fun renderLazyRow(
 
     LaunchedEffect(url) {
         if (isLoading) {
-            println("loading")
             data.value = mainActivity.contentLoader.fetchJsonData(url)
             isLoading = false
         }
@@ -792,7 +787,6 @@ fun renderLazyRow(
     if (isLoading) {
         CircularProgressIndicator()
     } else if (data.value.isEmpty()) {
-        println("list is empty2")
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
         val emptyBlock =
             element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
