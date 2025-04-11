@@ -116,6 +116,8 @@ fun LoadPage(
     val clickCount = remember { mutableStateOf(0) }
 
     LaunchedEffect(clickCount.value) {
+        isLoading = true
+        page = null
         page = withContext(Dispatchers.IO) {
             mainActivity.contentLoader.loadPage(name, mainActivity)
         }
@@ -690,16 +692,24 @@ fun renderLazyColumn(
         url = url.replace(match.value, replacement)
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
         url = url.replace("&&", "&").trimEnd('&', '?')
+        if (isNegated && values.isEmpty()){
+            println("list is empty")
+            data.value = emptyList()
+            isLoading = false
+        }
     }
 
     LaunchedEffect(url) {
-        data.value = mainActivity.contentLoader.fetchJsonData(url)
-        isLoading = false
+        if (isLoading) {
+            println("loading")
+            data.value = mainActivity.contentLoader.fetchJsonData(url)
+            isLoading = false
+        }
     }
-
     if (isLoading) {
         CircularProgressIndicator()
     } else if (data.value.isEmpty()) {
+        println("list is empty 2")
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
         val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
         emptyBlock?.uiElements?.forEach { ele ->
@@ -764,18 +774,28 @@ fun renderLazyRow(
         url = url.replace(match.value, replacement)
         url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
         url = url.replace("&&", "&").trimEnd('&', '?')
+        if (isNegated && values.isEmpty()) {
+            println("list is empty")
+            data.value = emptyList()
+            isLoading = false
+        }
     }
+
 
     LaunchedEffect(url) {
-        data.value = mainActivity.contentLoader.fetchJsonData(url)
-        isLoading = false
+        if (isLoading) {
+            println("loading")
+            data.value = mainActivity.contentLoader.fetchJsonData(url)
+            isLoading = false
+        }
     }
-
     if (isLoading) {
         CircularProgressIndicator()
     } else if (data.value.isEmpty()) {
+        println("list is empty2")
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
-        val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+        val emptyBlock =
+            element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
         emptyBlock?.uiElements?.forEach { ele ->
             RenderElement(
                 element = ele,
@@ -788,7 +808,8 @@ fun renderLazyRow(
         }
     } else {
         // 🔍 Finde LazyContent als konkreten UIElement-Typ
-        val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+        val contentBlock =
+            element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
         LazyRow(modifier = modifier) {
             items(data.value, key = { it.hashCode() }) { dataItem ->
                 contentBlock?.uiElements?.forEach { ele ->
@@ -804,7 +825,6 @@ fun renderLazyRow(
             }
         }
     }
-
 }
 
 @Composable
