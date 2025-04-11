@@ -1220,7 +1220,7 @@ fun dynamicImageFromAssets(
             Image(
                 bitmap = bitmap.asImageBitmap(),
                 contentDescription = null,
-                contentScale = when(scale) {
+                contentScale = when(scale.lowercase()) {
                     "crop" -> ContentScale.Crop
                     "fit" -> ContentScale.Fit
                     "inside" -> ContentScale.Inside
