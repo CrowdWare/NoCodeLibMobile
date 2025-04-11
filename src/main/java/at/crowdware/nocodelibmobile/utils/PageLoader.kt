@@ -465,6 +465,8 @@ fun BoxScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
         is UIElement.ImageElement -> {
             if (isInLazy) {
                 val alignment = if (element.align.isNotEmpty()) element.align.toAlignment() else Alignment.TopStart
+
+                println("inBox, inLazy: ${element.align}")
                 dynamicImageFromAssets(
                     modifier = Modifier.width(element.width.dp).align(alignment),
                     mainActivity,
