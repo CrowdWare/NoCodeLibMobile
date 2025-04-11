@@ -83,6 +83,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
@@ -464,9 +465,8 @@ fun BoxScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
         }
         is UIElement.ImageElement -> {
             if (isInLazy) {
-                val alignment = if (element.align.isNotEmpty()) element.align.toAlignment() else Alignment.TopStart
+                val alignment = if (element.align.isNotEmpty()) element.align.lowercase().toAlignment() else Alignment.TopStart
 
-                println("inBox, inLazy: ${element.align}")
                 dynamicImageFromAssets(
                     modifier = Modifier.width(element.width.dp).align(alignment),
                     mainActivity,
@@ -539,15 +539,15 @@ fun BoxScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
 
 fun String.toAlignment(): Alignment {
     return when (this) {
-        "topStart" -> Alignment.TopStart
-        "topCenter" -> Alignment.TopCenter
-        "topEnd" -> Alignment.TopEnd
-        "centerStart" -> Alignment.CenterStart
+        "topstart" -> Alignment.TopStart
+        "topcenter" -> Alignment.TopCenter
+        "topend" -> Alignment.TopEnd
+        "centerstart" -> Alignment.CenterStart
         "center" -> Alignment.Center
-        "centerEnd" -> Alignment.CenterEnd
-        "bottomStart" -> Alignment.BottomStart
-        "bottomCenter" -> Alignment.BottomCenter
-        "bottomEnd" -> Alignment.BottomEnd
+        "centerend" -> Alignment.CenterEnd
+        "bottomstart" -> Alignment.BottomStart
+        "bottomcenter" -> Alignment.BottomCenter
+        "bottomend" -> Alignment.BottomEnd
         else -> Alignment.TopStart // Default fallback
     }
 }
