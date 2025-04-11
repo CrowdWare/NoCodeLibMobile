@@ -121,8 +121,9 @@ fun LoadPage(
     var isLoading by remember { mutableStateOf(true) }
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
+    val clickCount by remember { mutableStateOf(0) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(clickCount) {
         page = withContext(Dispatchers.IO) {
             mainActivity.contentLoader.loadPage(name, mainActivity)
         }
@@ -245,9 +246,7 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -255,9 +254,7 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
                     modifier = if (element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
@@ -268,9 +265,7 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -278,9 +273,7 @@ fun RowScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
                     modifier = if (element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
@@ -353,9 +346,7 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -367,9 +358,7 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
                     },
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
@@ -380,9 +369,7 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -394,9 +381,7 @@ fun ColumnScope.RenderElement(mainActivity: BaseComposeActivity, navController: 
                     },
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
@@ -464,49 +449,41 @@ fun BoxScope.RenderElement(mainActivity: BaseComposeActivity, navController: Nav
             )
         }
         is UIElement.ImageElement -> {
+            val alignment = if (element.align.isNotEmpty()) element.align.lowercase().toAlignment() else Alignment.TopStart
             if (isInLazy) {
-                val alignment = if (element.align.isNotEmpty()) element.align.lowercase().toAlignment() else Alignment.TopStart
-
                 dynamicImageFromAssets(
                     modifier = Modifier.width(element.width.dp).align(alignment),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
                 dynamicImageFromAssets(
-                    modifier = Modifier,
+                    modifier = Modifier.width(element.width.dp).align(alignment),
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
         }
         is UIElement.AsyncImageElement -> {
+            val alignment = if (element.align.isNotEmpty()) element.align.lowercase().toAlignment() else Alignment.TopStart
             if (isInLazy) {
                 asyncImage(
-                    modifier = Modifier.width(element.width.dp),
+                    modifier = Modifier.width(element.width.dp).align(alignment),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
                 asyncImage(
-                    modifier = Modifier,
+                    modifier = Modifier.align(alignment),
                     mainActivity = mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem = dataItem
                 )
             }
@@ -1037,9 +1014,7 @@ fun RenderElement(
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -1047,9 +1022,7 @@ fun RenderElement(
                     modifier = Modifier,
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
 
@@ -1061,9 +1034,7 @@ fun RenderElement(
                     modifier = Modifier.width(element.width.dp),
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
             } else {
@@ -1071,9 +1042,7 @@ fun RenderElement(
                     modifier = Modifier,
                     mainActivity,
                     navcontroller = navController,
-                    filename = element.src,
-                    scale = element.scale,
-                    link = element.link,
+                    element,
                     dataItem
                 )
 
@@ -1137,6 +1106,7 @@ fun handleButtonClick(
             val set = prefs.getStringSet(listName, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
             set.add(uuid)
             prefs.edit().putStringSet(listName, set).apply()
+
         }
         link.startsWith("remove:") -> {
             val (listName, uuid) = extractListAndUUID(link.removePrefix("remove:"), dataItem)
@@ -1184,25 +1154,23 @@ fun dynamicImageFromAssets(
     modifier: Modifier = Modifier,
     mainActivity: BaseComposeActivity,
     navcontroller: NavHostController,
-    filename: String,
-    scale: String,
-    link: String,
+    element: UIElement.ImageElement,
     dataItem: Any
 ) {
     var cacheName by remember { mutableStateOf("") }
-    var fileName = filename
-    var _link = link
+    var fileName = element.src
+    var _link = element.link
     var isExternal  = false
-    if (filename.startsWith("<") && filename.endsWith(">")) {
-        val fieldName = filename.substring(1, filename.length - 1)
+    if (element.src.startsWith("<") && element.src.endsWith(">")) {
+        val fieldName = element.src.substring(1, element.src.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val url = dataItem[fieldName] as? String
             fileName = "$url"
             isExternal = true
         }
     }
-    if(link.startsWith("<") && link.endsWith(">")) {
-        val fieldName = link.substring(1, link.length - 1)
+    if(element.link.startsWith("<") && element.link.endsWith(">")) {
+        val fieldName = element.link.substring(1, element.link.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val value = dataItem[fieldName] as? String
             _link = "$value"
@@ -1220,7 +1188,7 @@ fun dynamicImageFromAssets(
             Image(
                 bitmap = bitmap.asImageBitmap(),
                 contentDescription = null,
-                contentScale = when(scale.lowercase()) {
+                contentScale = when(element.scale.lowercase()) {
                     "crop" -> ContentScale.Crop
                     "fit" -> ContentScale.Fit
                     "inside" -> ContentScale.Inside
@@ -1231,12 +1199,13 @@ fun dynamicImageFromAssets(
                     else -> ContentScale.Fit
                 },
                 modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) }
+                    .padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp,element.padding.bottom.dp)
             )
       } else {
-          Text(text = "Image [$filename] not found")
+          Text(text = "Image [$element.src] not found")
         }
     } else {
-        Text(text = "Image [$filename] not loaded")
+        Text(text = "Image [$element.src] not loaded")
     }
 }
 
@@ -1245,23 +1214,21 @@ fun asyncImage(
     modifier: Modifier = Modifier,
     mainActivity: BaseComposeActivity,
     navcontroller: NavHostController,
-    filename: String,
-    scale: String,
-    link: String,
+    element: UIElement.AsyncImageElement,
     dataItem: Any
 ) {
-    var model = filename
-    var _link = link
+    var model = element.src
+    var _link = element.link
 
-    if (filename.startsWith("<") && filename.endsWith(">")) {
-        val fieldName = filename.substring(1, filename.length - 1)
+    if (element.src.startsWith("<") && element.src.endsWith(">")) {
+        val fieldName = element.src.substring(1, element.src.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val url = dataItem[fieldName] as? String
             model = "$url"
         }
     }
-    if (link.startsWith("<") && link.endsWith(">")) {
-        val fieldName = link.substring(1, link.length - 1)
+    if (element.link.startsWith("<") && element.link.endsWith(">")) {
+        val fieldName = element.link.substring(1, element.link.length - 1)
         if (dataItem is Map<*, *> && fieldName.isNotEmpty()) {
             val value = dataItem[fieldName] as? String
             _link = "$value"
@@ -1269,9 +1236,10 @@ fun asyncImage(
     }
 
     AsyncImage(
-        modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) },
+        modifier = modifier.clickable { handleButtonClick(_link, mainActivity = mainActivity, navController = navcontroller, dataItem = dataItem) }
+            .padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp,element.padding.bottom.dp),
         model = model,
-        contentScale = when(scale) {
+        contentScale = when(element.scale.lowercase()) {
             "crop" -> ContentScale.Crop
             "fit" -> ContentScale.Fit
             "inside" -> ContentScale.Inside
@@ -1283,33 +1251,6 @@ fun asyncImage(
         },
         contentDescription = null
     )
-
-    /*
-    Box(
-        modifier = Modifier.height(210.dp).width(140.dp)
-    ) {
-        AsyncImage(
-            model = model,
-            contentDescription = "Bild",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit
-        )
-
-        IconButton(
-            onClick = { /* TODO: Handle Click */ },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(0.dp)
-                .size(48.dp)
-        ) {
-            Icon(
-                modifier = Modifier.size(32.dp),
-                imageVector = Icons.Default.Favorite,
-                contentDescription = "Like",
-                tint = Color.Red
-            )
-        }
-    }*/
 }
 
 

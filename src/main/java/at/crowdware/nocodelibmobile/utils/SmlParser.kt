@@ -278,6 +278,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                     "Image" -> {
                         val img = ImageElement(
                             src = (properties["src"] as? PropertyValue.StringValue)?.value ?: "",
+                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
                             scale = (properties["scale"] as? PropertyValue.StringValue)?.value ?: "1",
                             link = (properties["link"] as? PropertyValue.StringValue)?.value ?: "",
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
@@ -290,11 +291,13 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                     "AsyncImage" -> {
                         val img = UIElement.AsyncImageElement(
                             src = (properties["src"] as? PropertyValue.StringValue)?.value ?: "",
+                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
                             scale = (properties["scale"] as? PropertyValue.StringValue)?.value ?: "1",
                             link = (properties["link"] as? PropertyValue.StringValue)?.value ?: "",
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
                             height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
-                            weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0
+                            weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
+                            align = (properties["align"] as? PropertyValue.StringValue)?.value ?: ""
                         )
                         elements.add(img)
                     }

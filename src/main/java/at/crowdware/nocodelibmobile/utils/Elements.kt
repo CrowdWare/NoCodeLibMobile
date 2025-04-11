@@ -106,6 +106,7 @@ sealed class UIElement {
         val height: Int) : UIElement()
     data class ImageElement(
         val src: String,
+        val padding: Padding,
         val scale: String,
         val weight: Int,
         val width: Int,
@@ -114,10 +115,12 @@ sealed class UIElement {
         val link: String) : UIElement()
     data class AsyncImageElement(
         val src: String,
+        val padding: Padding,
         val scale: String,
         val weight: Int,
         val width: Int,
         val height: Int,
+        val align: String,
         val link: String) : UIElement()
     data class SpacerElement(
         val amount: Int,
