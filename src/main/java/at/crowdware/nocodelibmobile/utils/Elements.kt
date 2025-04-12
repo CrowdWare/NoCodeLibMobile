@@ -181,6 +181,7 @@ sealed class UIElement {
         val skybox: String
     ) : UIElement()
     data class LazyColumnElement(
+        val padding: Padding,
         val datasource: String,
         val filter: String,
         val limit: Int,
@@ -189,6 +190,7 @@ sealed class UIElement {
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
     data class LazyRowElement(
+        val padding: Padding,
         val datasource: String,
         val filter: String,
         val limit: Int,

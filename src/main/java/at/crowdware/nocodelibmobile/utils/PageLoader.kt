@@ -804,6 +804,7 @@ fun renderLazyColumn(
 
     // Animation beim Wechsel der finalData
     AnimatedContent(
+        modifier = Modifier.padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp, element.padding.bottom.dp),
         targetState = clickCount.value to finalData,
         transitionSpec = {
             fadeIn(tween(300)) with fadeOut(tween(300))
@@ -943,7 +944,9 @@ fun renderLazyRow(
     val sortedData = applyOrder(filteredData, element.order)
     val finalData = applyLimit(sortedData, element.limit)
 
+
     AnimatedContent(
+        modifier = Modifier.padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp, element.padding.bottom.dp),
         targetState = clickCount.value to finalData,
         transitionSpec = {
             fadeIn(tween(300)) with fadeOut(tween(300))

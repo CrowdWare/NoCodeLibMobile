@@ -341,6 +341,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         // TODO: Cached SML file are not updated
 
                         val lc = UIElement.LazyColumnElement(
+                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
                             datasource = (properties["datasource"] as? PropertyValue.StringValue)?.value ?: "",
                             filter = (properties["filter"] as? PropertyValue.StringValue)?.value ?: "",
                             order = (properties["order"] as? PropertyValue.StringValue)?.value ?: "",
@@ -354,6 +355,7 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         // TODO: Cached SML file are not updated
 
                         val lc = UIElement.LazyRowElement(
+                            padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0"),
                             datasource = (properties["datasource"] as? PropertyValue.StringValue)?.value ?: "",
                             filter = (properties["filter"] as? PropertyValue.StringValue)?.value ?: "",
                             order = (properties["order"] as? PropertyValue.StringValue)?.value ?: "",
