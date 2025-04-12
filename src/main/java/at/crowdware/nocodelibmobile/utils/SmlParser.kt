@@ -390,11 +390,13 @@ fun parseNestedAppElements(nestedElements: List<Any>, app: App) {
                 val elementName = (element.t2 as? TokenMatch)?.text
                 val properties = extractProperties(element)
 
+                println("parse: $elementName")
                 when (elementName) {
                     // TODO only used temp, should be replaced with plugin call
                     "RestDatasource" -> {
                         app.restDatasourceId = (properties["id"] as? PropertyValue.StringValue)?.value ?: ""
                         app.restDatasourceUrl = (properties["url"] as? PropertyValue.StringValue)?.value ?: ""
+                        println("rest: ${app.restDatasourceId}, ${app.restDatasourceUrl}")
                     }
                     "Deployment" -> {
                         parseNestedDeployElements(extractChildElements(element), app.deployment)
@@ -428,6 +430,9 @@ fun parseNestedAppElements(nestedElements: List<Any>, app: App) {
                         app.theme.surfaceVariant = (properties["surfaceVariant"] as? PropertyValue.StringValue)?.value ?: ""
                         app.theme.tertiary = (properties["tertiary"] as? PropertyValue.StringValue)?.value ?: ""
                         app.theme.tertiaryContainer = (properties["tertiaryContainer"] as? PropertyValue.StringValue)?.value ?: ""
+                    }
+                    else -> {
+                        println("⚠\uFE0F Unhandled element type: $elementName")
                     }
                 }
             }
