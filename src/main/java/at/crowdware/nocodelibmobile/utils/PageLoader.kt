@@ -121,7 +121,7 @@ fun LoadPage(
     var isLoading by remember { mutableStateOf(true) }
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
-    val clickCount = remember { mutableStateOf(0) }
+    val clickCount = remember { mutableStateOf(0) } // used to recompose only in LazyColumns and LazyRow
 
     LaunchedEffect(Unit) {
         isLoading = true
@@ -992,75 +992,7 @@ fun renderLazyRow(
         }
     }
 }
-/*
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun renderLazyRow(
-    modifier: Modifier,
-    mainActivity: BaseComposeActivity,
-    navController: NavHostController,
-    element: UIElement.LazyRowElement,
-    clickCount: MutableState<Int>,
-    datasources: MutableState<Map<String, List<Any>>>
-) {
-    val EmptyDataItem = object {}
-    val rawData = datasources.value[element.datasource]
-    if (rawData == null) {
-        CircularProgressIndicator(modifier = modifier)
-        return
-    }
 
-    val filteredData = applyFilter(
-        rawData,
-        filter = element.filter,
-        mainActivity = mainActivity
-    )
-    val sortedData = applyOrder(
-        filteredData,
-        order = element.order
-    )
-    val finalData = applyLimit(
-        sortedData,
-        limit = element.limit
-    )
-
-    if (finalData.isEmpty()) {
-        // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
-        val emptyBlock =
-            element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
-        emptyBlock?.uiElements?.forEach { ele ->
-            RenderElement(
-                element = ele,
-                mainActivity = mainActivity,
-                navController = navController,
-                dataItem = EmptyDataItem,
-                isInLazy = false,
-                clickCount = clickCount,
-                datasources = datasources
-            )
-        }
-    } else {
-        // 🔍 Finde LazyContent als konkreten UIElement-Typ
-        val contentBlock =
-            element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
-        LazyRow(modifier = modifier) {
-            items(finalData, key = { it.hashCode() }) { dataItem ->
-                contentBlock?.uiElements?.forEach { ele ->
-                    RenderElement(
-                        element = ele,
-                        mainActivity = mainActivity,
-                        navController = navController,
-                        dataItem = dataItem,
-                        isInLazy = true,
-                        clickCount = clickCount,
-                        datasources = datasources
-                    )
-                }
-            }
-        }
-    }
-}
-*/
 @Composable
 fun renderText(element: UIElement.TextElement, dataItem: Any) {
     Text(
