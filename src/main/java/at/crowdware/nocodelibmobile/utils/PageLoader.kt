@@ -769,7 +769,12 @@ fun renderLazyColumn(
     datasources: MutableState<Map<String, List<Any>>>
 ) {
     val EmptyDataItem = object {}
-    val rawData = datasources.value[element.datasource] ?: emptyList()
+    val rawData = datasources.value[element.datasource]
+    if (rawData == null) {
+        CircularProgressIndicator(modifier = modifier)
+        return
+    }
+
     val filteredData = applyFilter(
         rawData,
         filter = element.filter,
@@ -833,7 +838,12 @@ fun renderLazyRow(
     datasources: MutableState<Map<String, List<Any>>>
 ) {
     val EmptyDataItem = object {}
-    val rawData = datasources.value[element.datasource] ?: emptyList()
+    val rawData = datasources.value[element.datasource]
+    if (rawData == null) {
+        CircularProgressIndicator(modifier = modifier)
+        return
+    }
+
     val filteredData = applyFilter(
         rawData,
         filter = element.filter,
