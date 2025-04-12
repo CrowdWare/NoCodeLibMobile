@@ -341,7 +341,10 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         // TODO: Cached SML file are not updated
 
                         val lc = UIElement.LazyColumnElement(
-                            url = (properties["url"] as? PropertyValue.StringValue)?.value ?: "",
+                            datasource = (properties["datasource"] as? PropertyValue.StringValue)?.value ?: "",
+                            filter = (properties["filter"] as? PropertyValue.StringValue)?.value ?: "",
+                            order = (properties["order"] as? PropertyValue.StringValue)?.value ?: "",
+                            limit = (properties["limit"] as? PropertyValue.IntValue)?.value ?: 0,
                             weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
                         )
                         parseNestedElements(extractChildElements(element), lc.uiElements as MutableList<UIElement>)
@@ -351,7 +354,10 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         // TODO: Cached SML file are not updated
 
                         val lc = UIElement.LazyRowElement(
-                            url = (properties["url"] as? PropertyValue.StringValue)?.value ?: "",
+                            datasource = (properties["datasource"] as? PropertyValue.StringValue)?.value ?: "",
+                            filter = (properties["filter"] as? PropertyValue.StringValue)?.value ?: "",
+                            order = (properties["order"] as? PropertyValue.StringValue)?.value ?: "",
+                            limit = (properties["limit"] as? PropertyValue.IntValue)?.value ?: 0,
                             weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
                         )
                         parseNestedElements(extractChildElements(element), lc.uiElements as MutableList<UIElement>)
@@ -385,6 +391,11 @@ fun parseNestedAppElements(nestedElements: List<Any>, app: App) {
                 val properties = extractProperties(element)
 
                 when (elementName) {
+                    // TODO only used temp, should be replaced with plugin call
+                    "RestDatasource" -> {
+                        app.restDatasourceId = (properties["id"] as? PropertyValue.StringValue)?.value ?: ""
+                        app.restDatasourceUrl = (properties["url"] as? PropertyValue.StringValue)?.value ?: ""
+                    }
                     "Deployment" -> {
                         parseNestedDeployElements(extractChildElements(element), app.deployment)
                     }

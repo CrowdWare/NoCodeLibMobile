@@ -22,7 +22,6 @@ package at.crowdware.nocodelibmobile.ui.widgets
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import android.os.Build.VERSION
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -72,7 +71,12 @@ import java.io.IOException
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun NavigationView(items: MutableList<NavigationItem>, mainActivity: BaseComposeActivity, homeTitle: String) {
+fun NavigationView(
+    items: MutableList<NavigationItem>,
+    mainActivity: BaseComposeActivity,
+    homeTitle: String,
+    data: MutableState<Map<String, List<Any>>>
+) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("app.home") }
     var navhostBackground = remember { mutableStateOf(Color.White) }
@@ -120,12 +124,18 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: BaseCompose
                     NavigationDrawer(items, selectedItem, title.value, navTarget.value, mainActivity) {
                         when (items[index].id) {
                             // have a look at MainActivity for navigation
-                            "app.home" -> LoadPage("home", navhostBackground, mainActivity, navController)
-                            "app.books" -> LoadPage("books", navhostBackground, mainActivity, navController)
-                            "app.about" -> LoadPage("about", navhostBackground, mainActivity, navController)
+                            "app.home" -> LoadPage("home", navhostBackground, mainActivity, navController, data)
+                            "app.books" -> LoadPage("books", navhostBackground, mainActivity, navController, data)
+                            "app.about" -> LoadPage("about", navhostBackground, mainActivity, navController, data)
                             "app.settings" -> Settings()
                             else -> {
-                                LoadPage(items[index].id, navhostBackground, mainActivity, navController)
+                                LoadPage(
+                                    items[index].id,
+                                    navhostBackground,
+                                    mainActivity,
+                                    navController,
+                                    data
+                                )
                             }
                         }
                     }

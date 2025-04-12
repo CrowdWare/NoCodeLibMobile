@@ -107,7 +107,8 @@ fun LoadPage(
     name: String,
     navhostBackground: MutableState<Color>,
     mainActivity: BaseComposeActivity,
-    navController: NavHostController
+    navController: NavHostController,
+    data: MutableState<Map<String, List<Any>>>
 ) {
     var page:Page? by remember { mutableStateOf(Page(color="#FFFFFF", backgroundColor = "#000000", padding = Padding(0,0,0,0), "false", elements = mutableListOf()))}
     var isLoading by remember { mutableStateOf(true) }
@@ -179,7 +180,7 @@ fun LoadPage(
                             )
                         )
                 ) {
-                    RenderPage(page!!, mainActivity, navController, clickCount)
+                    RenderPage(page!!, mainActivity, navController, clickCount, data)
                 }
             }
         }
@@ -192,12 +193,13 @@ fun RenderPage(
     page: Page,
     mainActivity: BaseComposeActivity,
     navController: NavHostController,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     var dataItem: Any = emptyMap<String, Any>() // no data yet
 
     for (element in page.elements) {
-        RenderElement(element, mainActivity, navController, dataItem, false, clickCount)
+        RenderElement(element, mainActivity, navController, dataItem, false, clickCount, datasources)
     }
 }
 
@@ -209,22 +211,38 @@ fun RowScope.RenderElement(
     element: UIElement,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>) {
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
     when(element) {
         is UIElement.ColumnElement -> {
-            renderColumn(mainActivity, navController, if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, element, dataItem, isInLazy = isInLazy, clickCount)
+            renderColumn(mainActivity, navController, if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, element, dataItem, isInLazy = isInLazy, clickCount, datasources)
         }
         is UIElement.RowElement -> {
-            renderRow(mainActivity, navController, element, dataItem, clickCount = clickCount)
+            renderRow(mainActivity, navController, element, dataItem, clickCount = clickCount, datasources = datasources)
         }
         is UIElement.BoxElement -> {
-            renderBox(mainActivity, navController, element, dataItem, clickCount = clickCount)
+            renderBox(mainActivity, navController, element, dataItem, clickCount = clickCount, datasources = datasources)
         }
         is UIElement.LazyColumnElement -> {
-            renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity, navController, element, clickCount)
+            renderLazyColumn(
+                if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity, navController, element, clickCount)
+            renderLazyRow(
+                if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)
@@ -320,7 +338,9 @@ fun ColumnScope.RenderElement(
     element: UIElement,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>) {
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
     when (element) {
         is UIElement.ColumnElement -> {
             renderColumn(
@@ -330,7 +350,8 @@ fun ColumnScope.RenderElement(
                 element,
                 dataItem,
                 isInLazy = isInLazy,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.RowElement -> {
@@ -340,7 +361,8 @@ fun ColumnScope.RenderElement(
                 element,
                 dataItem,
                 isInLazy = isInLazy,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.BoxElement -> {
@@ -350,14 +372,29 @@ fun ColumnScope.RenderElement(
                 element,
                 dataItem,
                 isInLazy = isInLazy,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.LazyColumnElement -> {
-            renderLazyColumn(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity,navController,element, clickCount)
+            renderLazyColumn(
+                if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, mainActivity,navController,element, clickCount)
+            renderLazyRow(
+                if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)
@@ -461,7 +498,9 @@ fun BoxScope.RenderElement(
     element: UIElement,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>) {
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
     when(element) {
         is UIElement.ColumnElement -> {
             renderColumn(
@@ -471,20 +510,35 @@ fun BoxScope.RenderElement(
                 element,
                 dataItem,
                 isInLazy = isInLazy,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.RowElement -> {
-            renderRow(mainActivity, navController, element, dataItem, clickCount = clickCount)
+            renderRow(mainActivity, navController, element, dataItem, clickCount = clickCount, datasources = datasources)
         }
         is UIElement.BoxElement -> {
-            renderBox(mainActivity, navController, element, dataItem, clickCount = clickCount)
+            renderBox(mainActivity, navController, element, dataItem, clickCount = clickCount, datasources = datasources)
         }
         is UIElement.LazyColumnElement -> {
-            renderLazyColumn(modifier =  Modifier, mainActivity, navController, element, clickCount)
+            renderLazyColumn(
+                modifier =  Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(modifier =  Modifier, mainActivity, navController, element, clickCount)
+            renderLazyRow(
+                modifier =  Modifier,
+                mainActivity,
+                navController,
+                element,
+                clickCount,
+                datasources
+            )
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)
@@ -596,7 +650,8 @@ fun renderColumn(
     element: UIElement.ColumnElement,
     dataItem: Any,
     isInLazy: Boolean,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     Column (modifier = modifier.padding(
         top = element.padding.top.dp,
@@ -605,7 +660,10 @@ fun renderColumn(
         end = element.padding.right.dp
     )) {
         for (ele in element.uiElements) {
-            RenderElement(mainActivity = mainActivity, navController = navcontroller, element = ele, dataItem = dataItem, isInLazy = isInLazy, clickCount = clickCount)
+            RenderElement(mainActivity = mainActivity, navController = navcontroller, element = ele, dataItem = dataItem,
+                isInLazy = isInLazy,
+                clickCount = clickCount,
+                datasources = datasources)
         }
     }
 }
@@ -618,7 +676,8 @@ fun renderRow(
     element: UIElement.RowElement,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     Row (horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.padding(
@@ -628,7 +687,7 @@ fun renderRow(
         end = element.padding.right.dp
     )) {
         for (ele in element.uiElements) {
-            RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy, clickCount)
+            RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy, clickCount, datasources)
         }
     }
 }
@@ -641,7 +700,8 @@ fun renderBox(
     element: UIElement.BoxElement,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     Box(
         modifier = Modifier
@@ -655,9 +715,47 @@ fun renderBox(
             .then(if (element.height > 0) Modifier.height(element.height.dp) else Modifier)
     ) {
         for (ele in element.uiElements) {
-            RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy, clickCount)
+            RenderElement(mainActivity, navController, ele, dataItem, isInLazy = isInLazy, clickCount, datasources)
         }
     }
+}
+
+fun applyFilter(
+    data: List<Any>,
+    filter: String?,
+    mainActivity: BaseComposeActivity
+): List<Any> {
+    if (filter == null) return data
+    val regex = Regex("""(inList|notInList):(\w+)\[(\w+)]""")
+    val match = regex.find(filter) ?: return data
+
+    val (mode, listName, paramName) = match.destructured
+    val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
+    val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
+
+    return when (mode) {
+        "inList" -> data.filter {
+            (it as? Map<*, *>)?.get(paramName).toString() in values
+        }
+        "notInList" -> data.filter {
+            (it as? Map<*, *>)?.get(paramName).toString() !in values
+        }
+        else -> data
+    }
+}
+
+fun applyOrder(data: List<Any>, order: String?): List<Any> {
+    if (order == null) return data
+    val (field, dir) = order.split(" ").let { it[0] to (it.getOrNull(1) ?: "asc") }
+
+    val sorted = data.sortedBy {
+        (it as? Map<*, *>)?.get(field) as? Comparable<Any>
+    }
+    return if (dir == "desc") sorted.reversed() else sorted
+}
+
+fun applyLimit(data: List<Any>, limit: Int?): List<Any> {
+    return if (limit != null && limit > 0) data.take(limit) else data
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -667,48 +765,30 @@ fun renderLazyColumn(
     mainActivity: BaseComposeActivity,
     navController: NavHostController,
     element: UIElement.LazyColumnElement,
-    clickCount: MutableState<Int>) {
-    var url = element.url
-    val data = remember { mutableStateOf<List<Any>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
     val EmptyDataItem = object {}
+    val rawData = datasources.value[element.datasource] ?: emptyList()
+    val filteredData = applyFilter(
+        rawData,
+        filter = element.filter,
+        mainActivity = mainActivity
+    )
+    val sortedData = applyOrder(
+        filteredData,
+        order = element.order
+    )
+    val finalData = applyLimit(
+        sortedData,
+        limit = element.limit
+    )
 
-    val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
-    val match = regex.find(url)
 
-    if (match != null) {
-        val isNegated = match.groupValues[1] == "notInList"
-        val listName = match.groupValues[2]      // z. B. "favourite"
-        val paramName = match.groupValues[3]     // z. B. "uuid"
-
-        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
-        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
-
-        val replacement = if (!isNegated) {
-            values.joinToString("&") { "$paramName=$it" }
-        } else {
-            values.joinToString("&") { "exclude=$paramName:$it" }
-        }
-        url = url.replace(match.value, replacement)
-        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-        url = url.replace("&&", "&").trimEnd('&', '?')
-        if (isNegated && values.isEmpty()){
-            data.value = emptyList()
-            isLoading = false
-        }
-    }
-
-    LaunchedEffect(url) {
-        if (isLoading) {
-            data.value = mainActivity.contentLoader.fetchJsonData(url)
-            isLoading = false
-        }
-    }
-    if (isLoading) {
-        CircularProgressIndicator()
-    } else if (data.value.isEmpty()) {
+    if (finalData.isEmpty()) {
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
-        val emptyBlock = element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+        val emptyBlock =
+            element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
         emptyBlock?.uiElements?.forEach { ele ->
             RenderElement(
                 element = ele,
@@ -716,14 +796,16 @@ fun renderLazyColumn(
                 navController = navController,
                 dataItem = EmptyDataItem,
                 isInLazy = false,
-                clickCount = clickCount
+                clickCount = clickCount,
+                datasources = datasources
             )
         }
     } else {
         // 🔍 Finde LazyContent als konkreten UIElement-Typ
-        val contentBlock = element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+        val contentBlock =
+            element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
         LazyColumn(modifier = modifier) {
-            items(data.value, key = { it.hashCode() }) { dataItem ->
+            items(finalData, key = { it.hashCode() }) { dataItem ->
                 contentBlock?.uiElements?.forEach { ele ->
                     RenderElement(
                         element = ele,
@@ -731,7 +813,8 @@ fun renderLazyColumn(
                         navController = navController,
                         dataItem = dataItem,
                         isInLazy = true,
-                        clickCount = clickCount
+                        clickCount = clickCount,
+                        datasources = datasources
                     )
                 }
             }
@@ -746,47 +829,26 @@ fun renderLazyRow(
     mainActivity: BaseComposeActivity,
     navController: NavHostController,
     element: UIElement.LazyRowElement,
-    clickCount: MutableState<Int>) {
-    var url = element.url
-    val data = remember { mutableStateOf<List<Any>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
     val EmptyDataItem = object {}
+    val rawData = datasources.value[element.datasource] ?: emptyList()
+    val filteredData = applyFilter(
+        rawData,
+        filter = element.filter,
+        mainActivity = mainActivity
+    )
+    val sortedData = applyOrder(
+        filteredData,
+        order = element.order
+    )
+    val finalData = applyLimit(
+        sortedData,
+        limit = element.limit
+    )
 
-    val regex = Regex("""filter=(notInList|inList):([a-zA-Z0-9_-]+)\[([a-zA-Z0-9_-]+)]""")
-    val match = regex.find(url)
-
-    if (match != null) {
-        val isNegated = match.groupValues[1] == "notInList"
-        val listName = match.groupValues[2]      // z. B. "favourite"
-        val paramName = match.groupValues[3]     // z. B. "uuid"
-
-        val prefs = mainActivity.getSharedPreferences("nocode_lists", Context.MODE_PRIVATE)
-        val values = prefs.getStringSet(listName, emptySet()) ?: emptySet()
-
-        val replacement = if (!isNegated) {
-            values.joinToString("&") { "$paramName=$it" }
-        } else {
-            values.joinToString("&") { "exclude=$paramName:$it" }
-        }
-        url = url.replace(match.value, replacement)
-        url = url.replace(Regex("""[&?]$paramName=<.*?>"""), "")
-        url = url.replace("&&", "&").trimEnd('&', '?')
-        if (isNegated && values.isEmpty()) {
-            data.value = emptyList()
-            isLoading = false
-        }
-    }
-
-
-    LaunchedEffect(url) {
-        if (isLoading) {
-            data.value = mainActivity.contentLoader.fetchJsonData(url)
-            isLoading = false
-        }
-    }
-    if (isLoading) {
-        CircularProgressIndicator()
-    } else if (data.value.isEmpty()) {
+    if (finalData.isEmpty()) {
         // 🔍 Finde LazyNoContent als konkreten UIElement-Typ
         val emptyBlock =
             element.uiElements.find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
@@ -797,7 +859,8 @@ fun renderLazyRow(
                 navController = navController,
                 dataItem = EmptyDataItem,
                 isInLazy = false,
-                clickCount = clickCount
+                clickCount = clickCount,
+                datasources = datasources
             )
         }
     } else {
@@ -805,7 +868,7 @@ fun renderLazyRow(
         val contentBlock =
             element.uiElements.find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
         LazyRow(modifier = modifier) {
-            items(data.value, key = { it.hashCode() }) { dataItem ->
+            items(finalData, key = { it.hashCode() }) { dataItem ->
                 contentBlock?.uiElements?.forEach { ele ->
                     RenderElement(
                         element = ele,
@@ -813,7 +876,8 @@ fun renderLazyRow(
                         navController = navController,
                         dataItem = dataItem,
                         isInLazy = true,
-                        clickCount = clickCount
+                        clickCount = clickCount,
+                        datasources = datasources
                     )
                 }
             }
@@ -1070,7 +1134,8 @@ fun RenderElement(
     navController: NavHostController,
     dataItem: Any,
     isInLazy: Boolean = false,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     when (element) {
         is UIElement.ColumnElement -> {
@@ -1081,20 +1146,21 @@ fun RenderElement(
                 element,
                 dataItem,
                 isInLazy = isInLazy,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.RowElement -> {
-            renderRow(mainActivity, navController, element, dataItem, false, clickCount)
+            renderRow(mainActivity, navController, element, dataItem, false, clickCount, datasources)
         }
         is UIElement.BoxElement -> {
-            renderBox(mainActivity, navController, element, dataItem, false, clickCount)
+            renderBox(mainActivity, navController, element, dataItem, false, clickCount, datasources)
         }
         is UIElement.LazyColumnElement -> {
-            renderLazyColumn(Modifier, mainActivity, navController, element, clickCount = clickCount)
+            renderLazyColumn(Modifier, mainActivity, navController, element, clickCount = clickCount, datasources = datasources)
         }
         is UIElement.LazyRowElement -> {
-            renderLazyRow(Modifier, mainActivity, navController, element, clickCount)
+            renderLazyRow(Modifier, mainActivity, navController, element, clickCount, datasources = datasources)
         }
         is UIElement.TextElement -> {
             renderText(element, dataItem)

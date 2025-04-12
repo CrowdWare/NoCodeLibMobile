@@ -32,6 +32,10 @@ data class App(
     var id: String = "",
     var smlVersion: String = "",
     var description: String = "",
+    // only temporary used
+    var restDatasourceId: String = "",
+    var restDatasourceUrl: String = "",
+    // only temporary end
     var theme: ThemeElement = ThemeElement(),
     var deployment: DeploymentElement = DeploymentElement()
 )
@@ -177,12 +181,18 @@ sealed class UIElement {
         val skybox: String
     ) : UIElement()
     data class LazyColumnElement(
-        val url: String,
+        val datasource: String,
+        val filter: String,
+        val limit: Int,
+        val order: String,
         val weight: Int,
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
     data class LazyRowElement(
-        val url: String,
+        val datasource: String,
+        val filter: String,
+        val limit: Int,
+        val order: String,
         val weight: Int,
         val uiElements: MutableList<UIElement> = mutableListOf()
     ) : UIElement()
