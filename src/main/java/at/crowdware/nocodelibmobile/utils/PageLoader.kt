@@ -30,6 +30,13 @@ import android.view.Choreographer
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -116,7 +123,7 @@ fun LoadPage(
     val scope = rememberCoroutineScope()
     val clickCount = remember { mutableStateOf(0) }
 
-    LaunchedEffect(clickCount.value) {
+    LaunchedEffect(Unit) {
         isLoading = true
         page = null
         page = withContext(Dispatchers.IO) {
@@ -257,7 +264,8 @@ fun RowScope.RenderElement(
                 mainActivity = mainActivity,
                 navController = navController,
                 dataItem = dataItem,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.ImageElement -> {
@@ -268,7 +276,8 @@ fun RowScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 dynamicImageFromAssets(
@@ -277,7 +286,8 @@ fun RowScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -289,7 +299,8 @@ fun RowScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 asyncImage(
@@ -298,7 +309,8 @@ fun RowScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -409,7 +421,8 @@ fun ColumnScope.RenderElement(
                 mainActivity = mainActivity,
                 navController = navController,
                 dataItem = dataItem,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.ImageElement -> {
@@ -420,7 +433,8 @@ fun ColumnScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 dynamicImageFromAssets(
@@ -433,7 +447,8 @@ fun ColumnScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -445,7 +460,8 @@ fun ColumnScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 asyncImage(
@@ -458,7 +474,8 @@ fun ColumnScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -553,7 +570,8 @@ fun BoxScope.RenderElement(
                 mainActivity = mainActivity,
                 navController = navController,
                 dataItem = dataItem,
-                clickCount
+                clickCount,
+                datasources
             )
         }
         is UIElement.ImageElement -> {
@@ -565,7 +583,8 @@ fun BoxScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 dynamicImageFromAssets(
@@ -574,7 +593,8 @@ fun BoxScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -587,7 +607,8 @@ fun BoxScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 asyncImage(
@@ -596,7 +617,8 @@ fun BoxScope.RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             }
         }
@@ -758,6 +780,77 @@ fun applyLimit(data: List<Any>, limit: Int?): List<Any> {
     return if (limit != null && limit > 0) data.take(limit) else data
 }
 
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun renderLazyColumn(
+    modifier: Modifier,
+    mainActivity: BaseComposeActivity,
+    navController: NavHostController,
+    element: UIElement.LazyColumnElement,
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
+    val EmptyDataItem = object {}
+    val rawData = datasources.value[element.datasource]
+
+    if (rawData == null) {
+        CircularProgressIndicator(modifier = modifier)
+        return
+    }
+
+    val filteredData = applyFilter(rawData, element.filter, mainActivity)
+    val sortedData = applyOrder(filteredData, element.order)
+    val finalData = applyLimit(sortedData, element.limit)
+
+    // Animation beim Wechsel der finalData
+    AnimatedContent(
+        targetState = clickCount.value to finalData,
+        transitionSpec = {
+            fadeIn(tween(300)) with fadeOut(tween(300))
+        },
+        label = "AnimatedLazyColumn"
+    ) { (_,animatedList) ->
+        if (animatedList.isEmpty()) {
+            val emptyBlock = element.uiElements
+                .find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+
+            emptyBlock?.uiElements?.forEach { ele ->
+                RenderElement(
+                    element = ele,
+                    mainActivity = mainActivity,
+                    navController = navController,
+                    dataItem = EmptyDataItem,
+                    isInLazy = false,
+                    clickCount = clickCount,
+                    datasources = datasources
+                )
+            }
+        } else {
+            val contentBlock = element.uiElements
+                .find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+
+            LazyColumn(modifier = modifier) {
+                items(animatedList, key = { it.hashCode() }) { dataItem ->
+                    Box(modifier = Modifier.animateItemPlacement()) {
+                        contentBlock?.uiElements?.forEach { ele ->
+                            RenderElement(
+                                element = ele,
+                                mainActivity = mainActivity,
+                                navController = navController,
+                                dataItem = dataItem,
+                                isInLazy = true,
+                                clickCount = clickCount,
+                                datasources = datasources
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderLazyColumn(
@@ -825,8 +918,78 @@ fun renderLazyColumn(
             }
         }
     }
-}
+}*/
 
+
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun renderLazyRow(
+    modifier: Modifier,
+    mainActivity: BaseComposeActivity,
+    navController: NavHostController,
+    element: UIElement.LazyRowElement,
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
+) {
+    val EmptyDataItem = object {}
+    val rawData = datasources.value[element.datasource]
+
+    if (rawData == null) {
+        CircularProgressIndicator(modifier = modifier)
+        return
+    }
+
+    val filteredData = applyFilter(rawData, element.filter, mainActivity)
+    val sortedData = applyOrder(filteredData, element.order)
+    val finalData = applyLimit(sortedData, element.limit)
+
+    AnimatedContent(
+        targetState = clickCount.value to finalData,
+        transitionSpec = {
+            fadeIn(tween(300)) with fadeOut(tween(300))
+        },
+        label = "AnimatedLazyRow"
+    ) { (_,animatedList) ->
+        if (animatedList.isEmpty()) {
+            val emptyBlock = element.uiElements
+                .find { it is UIElement.LazyNoContentElement } as? UIElement.LazyNoContentElement
+
+            emptyBlock?.uiElements?.forEach { ele ->
+                RenderElement(
+                    element = ele,
+                    mainActivity = mainActivity,
+                    navController = navController,
+                    dataItem = EmptyDataItem,
+                    isInLazy = false,
+                    clickCount = clickCount,
+                    datasources = datasources
+                )
+            }
+        } else {
+            val contentBlock = element.uiElements
+                .find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
+
+            LazyRow(modifier = modifier) {
+                items(animatedList, key = { it.hashCode() }) { dataItem ->
+                    Box(modifier = Modifier.animateItemPlacement()) {
+                        contentBlock?.uiElements?.forEach { ele ->
+                            RenderElement(
+                                element = ele,
+                                mainActivity = mainActivity,
+                                navController = navController,
+                                dataItem = dataItem,
+                                isInLazy = true,
+                                clickCount = clickCount,
+                                datasources = datasources
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun renderLazyRow(
@@ -894,7 +1057,7 @@ fun renderLazyRow(
         }
     }
 }
-
+*/
 @Composable
 fun renderText(element: UIElement.TextElement, dataItem: Any) {
     Text(
@@ -1112,7 +1275,8 @@ fun renderButton(
     mainActivity: BaseComposeActivity,
     navController: NavHostController,
     dataItem: Any,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     var colors = buttonColors()
 
@@ -1131,7 +1295,7 @@ fun renderButton(
             .then(if(element.width > 0)Modifier.width(element.width.dp) else Modifier)
             .then(if(element.height > 0)Modifier.height(element.height.dp) else Modifier),
         colors = colors,
-        onClick =  { handleButtonClick(element.link, mainActivity, navController, dataItem, clickCount) }) {
+        onClick =  { handleButtonClick(element.link, mainActivity, navController, dataItem, clickCount, datasources) }) {
         Text(text = element.label)
     }
 }
@@ -1179,7 +1343,8 @@ fun RenderElement(
            renderMarkdown(modifier= Modifier, element, dataItem)
         }
         is UIElement.ButtonElement -> {
-            renderButton(modifier = Modifier.fillMaxWidth(), element = element, mainActivity = mainActivity, navController= navController, dataItem, clickCount)
+            renderButton(modifier = Modifier.fillMaxWidth(), element = element, mainActivity = mainActivity,
+                navController= navController, dataItem, clickCount, datasources)
         }
         is UIElement.ImageElement -> {
             if (isInLazy) {
@@ -1189,7 +1354,8 @@ fun RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 dynamicImageFromAssets(
@@ -1198,7 +1364,8 @@ fun RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
 
             }
@@ -1211,7 +1378,8 @@ fun RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
             } else {
                 asyncImage(
@@ -1220,7 +1388,8 @@ fun RenderElement(
                     navcontroller = navController,
                     element,
                     dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 )
 
             }
@@ -1253,7 +1422,8 @@ fun handleButtonClick(
     mainActivity: BaseComposeActivity,
     navController: NavHostController,
     dataItem: Any,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     when {
         link.startsWith("page:") -> {
@@ -1285,6 +1455,11 @@ fun handleButtonClick(
             set.add(uuid)
             prefs.edit().putStringSet(listName, set).apply()
             clickCount.value++ // trigger reload
+            val current = datasources.value["books"] ?: emptyList()
+            val newList = current.toList()
+            datasources.value = datasources.value.toMutableMap().apply {
+                put("books", newList)
+            }
         }
         link.startsWith("remove:") -> {
             val (listName, uuid) = extractListAndUUID(link.removePrefix("remove:"), dataItem)
@@ -1293,6 +1468,12 @@ fun handleButtonClick(
             set.remove(uuid)
             prefs.edit().putStringSet(listName, set).apply()
             clickCount.value++ // trigger reload
+            val current = datasources.value["books"] ?: emptyList()
+            val newList = current.toList() // ← verändert Inhalt garantiert
+            datasources.value = datasources.value.toMutableMap().apply {
+                put("books", newList)
+            }
+
         }
         else -> {
             println("Unknown link type: $link")
@@ -1335,7 +1516,8 @@ fun dynamicImageFromAssets(
     navcontroller: NavHostController,
     element: UIElement.ImageElement,
     dataItem: Any,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     var cacheName by remember { mutableStateOf("") }
     var fileName = element.src
@@ -1383,15 +1565,12 @@ fun dynamicImageFromAssets(
                     mainActivity = mainActivity,
                     navController = navcontroller,
                     dataItem = dataItem,
-                    clickCount
+                    clickCount,
+                    datasources
                 ) }
                     .padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp,element.padding.bottom.dp)
             )
-      } else {
-          Text(text = "Image [$element.src] not found")
         }
-    } else {
-        Text(text = "Image [$element.src] not loaded")
     }
 }
 
@@ -1402,7 +1581,8 @@ fun asyncImage(
     navcontroller: NavHostController,
     element: UIElement.AsyncImageElement,
     dataItem: Any,
-    clickCount: MutableState<Int>
+    clickCount: MutableState<Int>,
+    datasources: MutableState<Map<String, List<Any>>>
 ) {
     var model = element.src
     var _link = element.link
@@ -1428,7 +1608,8 @@ fun asyncImage(
             mainActivity = mainActivity,
             navController = navcontroller,
             dataItem = dataItem,
-            clickCount
+            clickCount,
+            datasources
         ) }
             .padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp,element.padding.bottom.dp),
         model = model,
