@@ -835,7 +835,7 @@ fun renderLazyColumn(
 
     // Animation beim Wechsel der finalData
     AnimatedContent(
-        modifier = Modifier.padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp, element.padding.bottom.dp),
+        modifier = modifier.padding(element.padding.left.dp, element.padding.top.dp, element.padding.right.dp, element.padding.bottom.dp),
         targetState = clickCount.value to finalData,
         transitionSpec = {
             fadeIn(tween(300)) with fadeOut(tween(300))
@@ -862,7 +862,7 @@ fun renderLazyColumn(
             val contentBlock = element.uiElements
                 .find { it is UIElement.LazyContentElement } as? UIElement.LazyContentElement
 
-            LazyColumn(modifier = modifier) {
+            LazyColumn() {
                 items(animatedList, key = { it.hashCode() }) { dataItem ->
                     Box(modifier = Modifier.animateItemPlacement()) {
                         contentBlock?.uiElements?.forEach { ele ->
