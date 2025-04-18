@@ -117,7 +117,7 @@ fun LoadPage(
     navController: NavHostController,
     data: MutableState<Map<String, List<Any>>>
 ) {
-    var page:Page? by remember { mutableStateOf(Page(color="#FFFFFF", backgroundColor = "#000000", padding = Padding(0,0,0,0), "false", elements = mutableListOf()))}
+    var page:Page? by remember { mutableStateOf(Page(color="#FFFFFF", backgroundColor = "#000000", padding = Padding(0,0,0,0), false, elements = mutableListOf()))}
     var isLoading by remember { mutableStateOf(true) }
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
@@ -141,7 +141,7 @@ fun LoadPage(
             val bgColor = page!!.backgroundColor
             navhostBackground.value = hexToColor(bgColor, MaterialTheme.colorScheme.background)
             var modifier = Modifier as Modifier
-            if (page!!.scrollable == "true") {
+            if (page!!.scrollable == true) {
                 modifier = modifier.verticalScroll(scrollState)
             }
             var showSettingsDialog by remember { mutableStateOf(false) }

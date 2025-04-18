@@ -63,6 +63,7 @@ sealed class PropertyValue {
     data class StringValue(val value: String) : PropertyValue()
     data class IntValue(val value: Int) : PropertyValue()
     data class FloatValue(val value: Float) : PropertyValue()
+    data class BooleanValue(val value: Boolean) : PropertyValue()
 }
 
 val identifier: Token = regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
@@ -73,6 +74,7 @@ val stringLiteral: Token = regexToken("\"[^\"]*\"")
 val whitespace: Token = regexToken("\\s+")
 val integerLiteral: Token = regexToken("\\d+")
 val floatLiteral = regexToken("\\d+\\.\\d+")
+val booleanLiteral: Token = regexToken("true|false")
 
 val lineComment: Token = regexToken("//.*")
 val blockComment: Token = regexToken(Regex("/\\*[\\s\\S]*?\\*/", RegexOption.DOT_MATCHES_ALL))
@@ -84,7 +86,8 @@ object SmlGrammar : Grammar<List<Any>>() {
     val stringParser = stringLiteral.map { PropertyValue.StringValue(it.text.removeSurrounding("\"")) }
     val integerParser = integerLiteral.map { PropertyValue.IntValue(it.text.toInt()) }
     val floatParser = floatLiteral.map { PropertyValue.FloatValue(it.text.toFloat()) }
-    val propertyValue = floatParser or integerParser or stringParser
+    val booleanParser = booleanLiteral.map { PropertyValue.BooleanValue(it.text.toBoolean()) }
+    val propertyValue = floatParser or integerParser or booleanParser or stringParser
     val property by (ignoredParser and identifier and ignoredParser and colon and ignoredParser and propertyValue).map { (_, id, _, _, _, value) ->
         id.text to value
     }
@@ -92,7 +95,7 @@ object SmlGrammar : Grammar<List<Any>>() {
     val element: Parser<Any> by ignoredParser and identifier and ignoredParser and lBrace and elementContent and ignoredParser and rBrace
 
     override val tokens: List<Token> = listOf(
-        identifier, lBrace, rBrace, colon, stringLiteral, floatLiteral, integerLiteral,
+        booleanLiteral, identifier, lBrace, rBrace, colon, stringLiteral, floatLiteral, integerLiteral,
         whitespace, lineComment, blockComment
     )
     override val rootParser: Parser<List<Any>> = (oneOrMore(element) and ignoredParser).map { (elements, _) -> elements }
@@ -139,7 +142,7 @@ fun extractChildElements(element: Any): List<Any> {
 }
 
 fun deserializePage(parsedResult: List<Any>): Page {
-    val page = Page(color = "", backgroundColor = "", padding = Padding(0, 0, 0, 0), "false", elements = mutableListOf())
+    val page = Page(color = "", backgroundColor = "", padding = Padding(0, 0, 0, 0), false, elements = mutableListOf())
 
     parsedResult.forEach { tuple ->
         when (tuple) {
@@ -152,7 +155,7 @@ fun deserializePage(parsedResult: List<Any>): Page {
                         page.color = (properties["color"] as? PropertyValue.StringValue)?.value ?: ""
                         page.backgroundColor = (properties["backgroundColor"] as? PropertyValue.StringValue)?.value ?: ""
                         page.padding = parsePadding((properties["padding"] as? PropertyValue.StringValue)?.value ?: "0")
-                        page.scrollable = (properties["scrollable"] as? PropertyValue.StringValue)?.value ?: "false"
+                        page.scrollable = (properties["scrollable"] as? PropertyValue.BooleanValue)?.value ?: false
                         parseNestedElements(extractChildElements(tuple), page.elements as MutableList<UIElement>)
                     }
                 }
