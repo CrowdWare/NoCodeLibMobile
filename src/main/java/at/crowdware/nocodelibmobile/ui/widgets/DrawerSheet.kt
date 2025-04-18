@@ -90,9 +90,9 @@ fun DrawerSheet(
                         contentDescription = stringResource(id = R.string.icon),
                         modifier = Modifier.weight(1f),
                     )
-                    Text("© 2024 CrowdWare", color = OnPrimary)
+                    Text("© 2025 CrowdWare", color = OnPrimary)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("http://www.crowdware.at", color = OnPrimary)
+                    Text("http://crowdware.info", color = OnPrimary)
                 }
             }
             Spacer(Modifier.height(12.dp))
