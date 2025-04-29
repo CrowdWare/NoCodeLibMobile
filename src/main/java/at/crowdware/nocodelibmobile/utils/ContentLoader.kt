@@ -113,7 +113,6 @@ class ContentLoader {
             return ""
         }
         val url = "$appUrl/$subdir/$name"
-        println("loadAsset: $url")
         if (isExternal) {
             // in this case name is an URL
             val fileName = name.substringAfterLast("/")
@@ -164,8 +163,9 @@ class ContentLoader {
             return ""
         }
         val lang = LocaleManager.getLanguage()
-        val url = "$appUrl/parts/$name"
-        val result = app!!.deployment.files.find { it.path == name && it.type == "part"}
+        val url = "$appUrl/parts/$name-$lang.md"
+        println("loadPart: $url")
+        val result = app!!.deployment.files.find { it.path == "$name-$lang.md" && it.type == "part"}
         if (result == null) {
             return ""
         }
@@ -173,6 +173,7 @@ class ContentLoader {
             ("ContentCache/" + appUrl.substringAfter("://") + "/parts/").replace(".", "_")
                 .replace(":", "_") + name + "-" + lang + ".md"
 
+        println("loadPart: $url, $fileName")
         val file = File(context.filesDir, fileName)
         var ret = true
         if (file.exists()) {
