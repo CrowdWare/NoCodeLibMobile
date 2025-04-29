@@ -396,11 +396,9 @@ fun parseNestedAppElements(nestedElements: List<Any>, app: App) {
 
                 println("parse: $elementName")
                 when (elementName) {
-                    // TODO only used temp, should be replaced with plugin call
                     "RestDatasource" -> {
                         app.restDatasourceId = (properties["id"] as? PropertyValue.StringValue)?.value ?: ""
                         app.restDatasourceUrl = (properties["url"] as? PropertyValue.StringValue)?.value ?: ""
-                        println("rest: ${app.restDatasourceId}, ${app.restDatasourceUrl}")
                     }
                     "Deployment" -> {
                         parseNestedDeployElements(extractChildElements(element), app.deployment)

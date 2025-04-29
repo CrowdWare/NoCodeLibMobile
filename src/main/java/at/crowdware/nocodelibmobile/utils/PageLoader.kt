@@ -1812,7 +1812,7 @@ fun loadTextAssetFromCache(assetName: String, context: Context): String {
 }
 
 @Composable
-private fun translate(
+fun translate(
     text: String,
     mainActivity: BaseComposeActivity
 ): String {
