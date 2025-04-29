@@ -74,7 +74,6 @@ class ContentLoader {
             val jsonArray = JSONArray(jsonData)
             val dataList = mutableListOf<Any>()
 
-            println("success: $response")
             for (i in 0 until jsonArray.length()) {
                 val jsonObject = jsonArray.getJSONObject(i)
                 val dataMap = mutableMapOf<String, Any>()
@@ -85,7 +84,6 @@ class ContentLoader {
             }
             dataList
         } else {
-            println("empty")
             emptyList()
         }
     }
