@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "at.crowdware.nocodelibmobile"
-    compileSdk = 33
+    compileSdk = 35
 
     buildFeatures {
         compose = true
@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 35
     }
 
     compileOptions {

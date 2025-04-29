@@ -162,16 +162,15 @@ class ContentLoader {
         if (app == null) {
             return ""
         }
-        val lang = "-" + LocaleManager.getLanguage()
-        val url = "$appUrl/parts$lang/$name"
-        val result = app!!.deployment.files.find { it.path == name && it.type == "part$lang"}
+        val lang = LocaleManager.getLanguage()
+        val url = "$appUrl/parts/$name"
+        val result = app!!.deployment.files.find { it.path == name && it.type == "part"}
         if (result == null) {
             return ""
         }
         val fileName =
-            ("ContentCache/" + appUrl.substringAfter("://") + "/parts$lang/").replace(".", "_")
-                .replace(":", "_") + name
-
+            ("ContentCache/" + appUrl.substringAfter("://") + "/parts/").replace(".", "_")
+                .replace(":", "_") + name + "-" + lang + ".md"
 
         val file = File(context.filesDir, fileName)
         var ret = true
@@ -206,16 +205,16 @@ class ContentLoader {
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadPage(name: String, activity: BaseComposeActivity): Page? {
-        val lang = "-" + LocaleManager.getLanguage()
+        val lang = LocaleManager.getLanguage()
         var fileContent = ""
-        val url = "$appUrl/pages$lang/$name.sml"
+        val url = "$appUrl/pages/$name.sml"
         if (app == null)
             return null
-        val result = app!!.deployment.files.find { it.path == "$name.sml" && it.type == "page$lang"}
+        val result = app!!.deployment.files.find { it.path == "$name.sml" && it.type == "page"}
         if (result == null) {
             return null
         }
-        val fileName = ("ContentCache/" + appUrl.substringAfter("://") + "/pages$lang/$name").replace(".", "_").replace(":", "_") + ".sml"
+        val fileName = ("ContentCache/" + appUrl.substringAfter("://") + "/pages/$name").replace(".", "_").replace(":", "_") + ".sml"
         val file = File(context.filesDir, fileName)
         fileContent = if (file.exists()) {
             val lastModifiedMillis = file.lastModified()
