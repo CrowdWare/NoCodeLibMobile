@@ -237,7 +237,6 @@ fun parseNestedElements(nestedElements: List<Any>, elements: MutableList<UIEleme
                         val md = ((properties["text"] as? PropertyValue.StringValue)?.value ?: "").split("\n").joinToString("\n") { it.trim() }
                         val ele = MarkdownElement(
                             text = md,
-                            part = (properties["part"] as? PropertyValue.StringValue)?.value ?: "",
                             width = (properties["width"] as? PropertyValue.IntValue)?.value ?: 0,
                             height = (properties["height"] as? PropertyValue.IntValue)?.value ?: 0,
                             weight = (properties["weight"] as? PropertyValue.IntValue)?.value ?: 0,
@@ -495,5 +494,101 @@ fun parseApp(sml: String): App? {
     } catch (e: Exception) {
         println("An error occurred while parsing an app: ${e.message}\nSML: $sml")
         return null
+    }
+}
+
+fun convertTupleToSmlNode(tuple: Any): SmlNode? {
+    if (tuple !is Tuple7<*, *, *, *, *, *, *>) return null
+
+    val nameToken = tuple.t2
+    val content = tuple.t5 as? List<*> ?: return null
+
+    val name = (nameToken as? TokenMatch)?.text ?: return null
+
+    val properties = mutableMapOf<String, PropertyValue>()
+    val children = mutableListOf<SmlNode>()
+
+    content.forEach {
+        when (it) {
+            is Pair<*, *> -> {
+                val key = it.first as? String ?: return@forEach
+                val value = it.second as? PropertyValue ?: return@forEach
+                properties[key] = value
+            }
+            is Tuple7<*, *, *, *, *, *, *> -> {
+                convertTupleToSmlNode(it)?.let { node -> children.add(node) }
+            }
+        }
+    }
+
+    return SmlNode(name, properties, children)
+}
+
+fun String.lineWrap(maxLen: Int): String =
+    this.chunked(maxLen).joinToString("\n")
+
+fun parseSML(sml: String): Pair<SmlNode?, String?> {
+    val rootList = try {
+        SmlGrammar.parseToEnd(sml)
+    } catch (e: Exception) {
+        return null to "ParseError: ${e.message?.lineWrap(100)}"
+    }
+    return rootList.firstOrNull()?.let { convertTupleToSmlNode(it) } to null
+}
+
+data class SmlNode(
+    val name: String,
+    val properties: Map<String, PropertyValue>,
+    val children: List<SmlNode>
+)
+
+fun getStringValue(node: SmlNode, key: String, default: String): String {
+    val value = node.properties[key]
+    return when {
+        value is PropertyValue.StringValue -> value.value
+        value is PropertyValue -> {
+            val type = value.javaClass.simpleName
+            println("Warning: The value for '$key' is not a StringValue (found: $type). Returning default value: \"$default\"")
+            default
+        }
+        else -> default
+    }
+}
+
+fun getFloatValue(node: SmlNode, key: String, default: Float): Float {
+    val value = node.properties[key]
+    return when {
+        value is PropertyValue.FloatValue -> value.value
+        value is PropertyValue -> {
+            val type = value.javaClass.simpleName
+            println("Warning: The value for '$key' is not a FloatValue (found: $type). Returning default: $default")
+            default
+        }
+        else -> default
+    }
+}
+
+fun getIntValue(node: SmlNode, key: String, default: Int): Int {
+    val value = node.properties[key]
+    return when {
+        value is PropertyValue.IntValue -> value.value
+        value is PropertyValue -> {
+            val type = value.javaClass.simpleName
+            println("Warning: The value for '$key' is not an IntValue (found: $type). Returning default value: $default")
+            default
+        }
+        else -> default
+    }
+}
+fun getBoolValue(node: SmlNode, key: String, default: Boolean): Boolean {
+    val value = node.properties[key]
+    return when {
+        value is PropertyValue.BooleanValue -> value.value
+        value is PropertyValue -> {
+            val type = value.javaClass.simpleName
+            println("Warning: The value for '$key' is not a BooleanValue (found: $type). Returning default value: $default")
+            default
+        }
+        else -> default
     }
 }

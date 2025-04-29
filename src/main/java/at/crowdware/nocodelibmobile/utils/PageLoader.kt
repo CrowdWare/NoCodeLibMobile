@@ -89,6 +89,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.navigation.NavHostController
 import at.crowdware.nocodelibmobile.BaseComposeActivity
+import at.crowdware.nocodelibmobile.getStringValue
+import at.crowdware.nocodelibmobile.logic.LocaleManager
+import at.crowdware.nocodelibmobile.parseSML
 import at.crowdware.nocodelibmobile.ui.SettingsDialog
 import com.google.android.filament.utils.KTX1Loader
 import com.google.android.filament.utils.ModelViewer
@@ -979,10 +982,11 @@ fun RowScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEleme
     var cacheName by remember { mutableStateOf("") }
     var text = ""
 
-    if (element.part.isNotEmpty()) {
-        LaunchedEffect(element.part) {
+    if (element.text.startsWith("part:")) {
+        val part = element.text.substringAfter("part:")
+        LaunchedEffect(part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadPart(element.part)
+                mainActivity.contentLoader.loadPart(part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -1036,10 +1040,11 @@ fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEl
     var cacheName by remember { mutableStateOf("") }
     var text = ""
 
-    if (element.part.isNotEmpty()) {
-        LaunchedEffect(element.part) {
+    if (element.text.startsWith("part:")) {
+        val part = element.text.substringAfter("part:")
+        LaunchedEffect(part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadPart(element.part)
+                mainActivity.contentLoader.loadPart(part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -1093,10 +1098,11 @@ fun renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement, dataI
     var cacheName by remember { mutableStateOf("") }
     var text = ""
 
-    if (element.part.isNotEmpty()) {
-        LaunchedEffect(element.part) {
+    if (element.text.startsWith("part:")) {
+        val part = element.text.substringAfter("part:")
+        LaunchedEffect(part) {
             cacheName = withContext(Dispatchers.IO) {
-                mainActivity.contentLoader.loadPart(element.part)
+                mainActivity.contentLoader.loadPart(part)
             }
         }
         if (cacheName.isNotEmpty()) {
@@ -1191,13 +1197,14 @@ fun renderButton(
         colors = buttonColors(
             containerColor = hexToColor(element.backgroundColor, Color.Unspecified))
 
+    val label = translate(element.label, mainActivity)
     Button(
         modifier = modifier
             .then(if(element.width > 0)Modifier.width(element.width.dp) else Modifier)
             .then(if(element.height > 0)Modifier.height(element.height.dp) else Modifier),
         colors = colors,
         onClick =  { handleButtonClick(element.link, mainActivity, navController, dataItem, clickCount, datasources, datasourceId) }) {
-        Text(text = element.label)
+        Text(text = label)
     }
 }
 
@@ -1791,4 +1798,36 @@ fun loadTextAssetFromCache(assetName: String, context: Context): String {
         println("Error loading cached asset [$assetName]: ${e.message}")
         ""
     }
+}
+
+@Composable
+private fun translate(
+    text: String,
+    mainActivity: BaseComposeActivity
+): String {
+    var cacheName by remember { mutableStateOf("") }
+    val lang = LocaleManager.getLanguage()
+    val trans = "translations/Strings-$lang.sml"
+    var txt = text
+    LaunchedEffect(trans) {
+        cacheName = withContext(Dispatchers.IO) {
+            mainActivity.contentLoader.loadAsset(trans, "translations")
+        }
+    }
+    if (cacheName.isNotEmpty()) {
+
+        val file = File(mainActivity.filesDir, cacheName)
+        if (file.exists()) {
+            val content = file.readText()
+            val (parsedStrings, _) = parseSML(content)
+            if (parsedStrings != null) {
+                val regex =
+                    Regex("""string:([A-Za-z0-9_\-]+)""")
+                txt = regex.replace(txt) { matchResult ->
+                    getStringValue(parsedStrings, matchResult.groupValues[1], matchResult.value)
+                }
+            }
+        }
+    }
+    return txt
 }

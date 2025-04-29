@@ -164,7 +164,6 @@ sealed class UIElement {
     ) : UIElement()
     data class MarkdownElement(
         val text: String,
-        val part: String,
         val color: String,
         val fontSize: TextUnit,
         val fontWeight: FontWeight,
