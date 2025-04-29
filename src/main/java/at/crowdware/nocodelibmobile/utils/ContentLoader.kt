@@ -113,6 +113,7 @@ class ContentLoader {
             return ""
         }
         val url = "$appUrl/$subdir/$name"
+        println("loadAsset: $url")
         if (isExternal) {
             // in this case name is an URL
             val fileName = name.substringAfterLast("/")

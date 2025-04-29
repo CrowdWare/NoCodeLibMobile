@@ -259,10 +259,15 @@ fun RowScope.RenderElement(
             )
         }
         is UIElement.TextElement -> {
-            renderText(element, dataItem)
+            renderText(element, dataItem, mainActivity)
         }
         is UIElement.MarkdownElement -> {
-            renderMarkdown(modifier = if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier, element, dataItem = dataItem)
+            renderMarkdown(
+                modifier = if(element.weight > 0) Modifier.weight(element.weight.toFloat()) else Modifier,
+                element,
+                dataItem = dataItem,
+                mainActivity
+            )
         }
         is UIElement.ButtonElement -> {
             renderButton(
@@ -426,7 +431,7 @@ fun ColumnScope.RenderElement(
             )
         }
         is UIElement.TextElement -> {
-            renderText(element, dataItem)
+            renderText(element, dataItem, mainActivity)
         }
         is UIElement.MarkdownElement -> {
             renderMarkdown(modifier = if(element.weight > 0){Modifier.weight(element.weight.toFloat())} else {Modifier}, element)
@@ -583,10 +588,10 @@ fun BoxScope.RenderElement(
             )
         }
         is UIElement.TextElement -> {
-            renderText(element, dataItem)
+            renderText(element, dataItem, mainActivity)
         }
         is UIElement.MarkdownElement -> {
-            renderMarkdown(modifier = Modifier, element, dataItem = dataItem)
+            renderMarkdown(modifier = Modifier, element, dataItem = dataItem, mainActivity)
         }
         is UIElement.ButtonElement -> {
             renderButton(
@@ -962,7 +967,8 @@ fun renderLazyRow(
 }
 
 @Composable
-fun renderText(element: UIElement.TextElement, dataItem: Any) {
+fun renderText(element: UIElement.TextElement, dataItem: Any, mainActivity: BaseComposeActivity) {
+    val txt = translate(element.text, mainActivity = mainActivity)
     Text(
         text = element.text.trim(),
         style = TextStyle(
@@ -1013,7 +1019,7 @@ fun RowScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEleme
         }
     } else {
         text = element.text.trim()
-        val parsedMarkdown = parseMarkdown(text)
+        val parsedMarkdown = parseMarkdown(translate(text, mainActivity))
         ClickableText(modifier = modifier,
             text = parsedMarkdown,
             onClick = {offset -> parsedMarkdown.getStringAnnotations(
@@ -1070,7 +1076,7 @@ fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEl
         }
     } else {
         text = element.text.trim()
-        val parsedMarkdown = parseMarkdown(text)
+        val parsedMarkdown = parseMarkdown(translate(text, mainActivity))
         ClickableText(modifier = modifier,
             text = parsedMarkdown,
             onClick = {offset -> parsedMarkdown.getStringAnnotations(
@@ -1092,7 +1098,12 @@ fun ColumnScope.renderMarkdown(modifier: Modifier, element: UIElement.MarkdownEl
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement, dataItem: Any) {
+fun renderMarkdown(
+    modifier: Modifier,
+    element: UIElement.MarkdownElement,
+    dataItem: Any,
+    mainActivity: BaseComposeActivity
+) {
     val context = LocalContext.current
     val mainActivity = context as BaseComposeActivity
     var cacheName by remember { mutableStateOf("") }
@@ -1134,7 +1145,7 @@ fun renderMarkdown(modifier: Modifier, element: UIElement.MarkdownElement, dataI
                 text = "$des"
             }
         }
-        val parsedMarkdown = parseMarkdown(text)
+        val parsedMarkdown = parseMarkdown(translate(text, mainActivity))
         ClickableText(modifier = modifier,
             text = parsedMarkdown,
             onClick = {offset -> parsedMarkdown.getStringAnnotations(
@@ -1247,10 +1258,10 @@ fun RenderElement(
             renderLazyRow(Modifier, mainActivity, navController, element, clickCount, datasources = datasources)
         }
         is UIElement.TextElement -> {
-            renderText(element, dataItem)
+            renderText(element, dataItem, mainActivity)
         }
         is UIElement.MarkdownElement -> {
-           renderMarkdown(modifier= Modifier, element, dataItem)
+           renderMarkdown(modifier= Modifier, element, dataItem, mainActivity)
         }
         is UIElement.ButtonElement -> {
             renderButton(modifier = Modifier.fillMaxWidth(), element = element, mainActivity = mainActivity,
@@ -1807,7 +1818,7 @@ private fun translate(
 ): String {
     var cacheName by remember { mutableStateOf("") }
     val lang = LocaleManager.getLanguage()
-    val trans = "translations/Strings-$lang.sml"
+    val trans = "Strings-$lang.sml"
     var txt = text
     LaunchedEffect(trans) {
         cacheName = withContext(Dispatchers.IO) {
